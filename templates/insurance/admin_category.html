@@ -1,0 +1,105 @@
+{% extends 'insurance/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            background: #f0f2f8 !important;
+        }
+
+        .section-title {
+            background: #5b39f0;
+            padding: 18px 30px;
+            border-radius: 15px;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            width: 100%;
+        }
+
+        .dash-area {
+            padding: 0px 10px;
+        }
+
+        .overview-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0px 4px 18px rgba(0,0,0,0.08);
+            transition: 0.2s ease-in-out;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .overview-card h6 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .overview-card i {
+            font-size: 36px;
+            color: #5b39f0;
+            margin-top: 10px;
+        }
+
+        .overview-card a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .row-gap {
+            gap: 25px;
+        }
+    </style>
+</head>
+
+<div class="container dash-area">
+    <div class="section-title text-center">Category Management</div>
+
+    <div class="row row-gap justify-content-start">
+
+        <div class="col-md-3 col-sm-6">
+            <div class="overview-card">
+                <a href="admin-view-category"><h6>View Category</h6></a>
+                <i class="fa-solid fa-eye"></i>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="overview-card">
+                <a href="admin-add-category"><h6>Add Category</h6></a>
+                <i class="fa-solid fa-plus"></i>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="overview-card">
+                <a href="admin-update-category"><h6>Update Category</h6></a>
+                <i class="fa-solid fa-pen"></i>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="overview-card">
+                <a href="admin-delete-category"><h6>Delete Category</h6></a>
+                <i class="fa-solid fa-trash"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+{% endblock content %}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>InsuraCore - Home</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("{% static 'image/indexbg.jpg' %}") no-repeat center center;
+      background-size: cover;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Dark overlay to fade background */
+    body::before {
+      content: "";
+      position: absolute;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.6);
+      z-index: 0;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 90%;
+      max-width: 1200px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease-out;
+    }
+
+    .hero.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-left {
+      flex: 1;
+      color: #fff;
+    }
+
+    .hero-left h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #FFD700, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+
+    .hero-left p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      opacity: 0.85;
+    }
+
+    .btn-modern {
+      padding: 12px 35px;
+      font-size: 18px;
+      border-radius: 50px;
+      border: none;
+      margin: 10px 10px 10px 0;
+      font-weight: 500;
+      text-decoration: none;
+      color: #fff;
+      transition: 0.3s ease;
+      display: inline-block;
+    }
+
+
+
+    .btn-early {
+      background: #ff4d6d;
+    }
+
+    .gradient-text {
+        color: #ffffff;
+        font-weight: 600;
+
+
+{#background: linear-gradient(90deg, #00C9A7, #3CDAFF);#}
+{#-webkit-background-clip: text;#}
+{#color: transparent;#}
+}
+
+
+
+
+    .btn-early:hover {
+      background: #e63758;
+      transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(255,82,82,0.3);
+    }
+
+    .hero-right {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-right img {
+      max-width: 80%;
+      border-radius: 20px;
+      {#box-shadow: 0 12px 30px rgba(0,0,0,0.5);#}
+      animation: float 4s ease-in-out infinite;
+    }
+
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Responsive */
+    @media(max-width: 900px) {
+      .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+      .hero-left h1 {
+        font-size: 2.5rem;
+      }
+      .hero-left p {
+        font-size: 1rem;
+      }
+      .hero-right img {
+        max-width: 60%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  {% include "insurance/navbar.html" %}
+
+  <section class="hero" id="heroSection">
+    <div class="hero-left">
+      <h1 class="hero-title">Insurance Management Platform</h1>
+   <h2> <span class="gradient-text">Smarter Coverage, Better Protection</span>
+</h2>
+
+      <p>Delivering efficiency, accuracy, and seamless customer experiences through an intelligent insurance management platform.</p>
+      <a href="/customer/customersignup" class="btn-modern btn-early"><i class="fa fa-user"></i> Sign Up as Customer</a>
+    </div>
+
+    <div class="hero-right">
+      <img src="{% static 'image/illustration.png' %}" alt="Illustration">
+    </div>
+  </section>
+
+  <script>
+    // Animate hero fade-in
+    window.addEventListener("load", () => {
+      document.getElementById("heroSection").classList.add("visible");
+    });
+  </script>
+</body>
+</html>

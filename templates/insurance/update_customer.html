@@ -1,0 +1,232 @@
+{% extends 'insurance/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+{% load static %}
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    /* --- COLOR DEFINITIONS (Violet/Blue/Teal Palette) --- */
+    :root {
+      --color-primary: #6C4CF5;      /* Main Primary Color (Violet) */
+      --color-secondary: #4FC3F7;    /* Light Secondary Color (Teal) */
+      --color-header-text: #ffffff;
+      --color-text-dark: #34495e;
+      --color-bg-white: #ffffff;
+      --color-border-light: #6c4cf566;
+      --color-input-bg: #f7f8fc;
+      --color-success: #4CAF50; /* Base success color for update button */
+    }
+
+    /* --- Form Container Styling (Two-Column Wrapper) --- */
+    .two-column-wrapper {
+      max-width: 900px; /* Increased max width to fit two columns */
+      margin: 56px auto 22px auto;
+      background: var(--color-bg-white);
+      border-radius: 22px;
+      box-shadow: 0 6px 32px 2px rgba(108, 76, 245, 0.10);
+      display: flex; /* Enable flexbox for side-by-side columns */
+      overflow: hidden;
+    }
+
+    /* 2. Left Column: Image Container (Placeholder) */
+    .image-container {
+      width: 40%;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      /* Background Image placeholder based on the dash image */
+      background: url("{% static 'image/img.png' %}") no-repeat center center;
+      background-size: cover;
+      filter: grayscale(20%) brightness(85%); /* Apply slight filter for better text contrast */
+    }
+
+    /* 3. Right Column: Form Content */
+    .form-content-wrapper {
+        width: 60%;
+        padding: 38px 38px 32px 38px;
+    }
+
+    /* Modern Header (matches Add Policy) */
+    .modern-form-header {
+      background: linear-gradient(90deg, var(--color-primary) 60%, var(--color-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 2.1rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+
+    /* --- Input Styling (Matches Add Policy) --- */
+    .form-row-compact {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    .form-row-compact .form-group {
+        flex: 1 1 48%;
+        margin-bottom: 19px;
+    }
+
+    .form-group {
+        margin-bottom: 19px; /* Fallback for single columns */
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 7px;
+      color: #424a60;
+      font-size: 1.08em;
+      letter-spacing: .03em;
+    }
+
+    .form-control,
+    select.form-control,
+    input[type=file] { /* Added file input styling */
+      border-radius: 14px !important;
+      border: 1.3px solid var(--color-border-light) !important;
+      background: var(--color-input-bg) !important;
+      min-height: 46px;
+      font-size: 1.06em;
+      font-weight: 500;
+      box-shadow: 0 1px 6px rgba(108, 76, 245, 0.04);
+      padding-left: 17px;
+      margin-bottom: 0 !important; /* Controlled by form-group */
+      transition: border .2s, box-shadow .2s;
+    }
+
+    .form-control:focus {
+      border: 2px solid var(--color-primary) !important;
+      background: var(--color-bg-white) !important;
+      box-shadow: 0 2px 12px 1px rgba(108, 76, 245, 0.08) !important;
+      outline: none;
+    }
+
+    /* Custom style for file input padding to fix appearance */
+    input[type=file] {
+      padding-top: 8px; /* Adjust vertical alignment for file input text */
+    }
+
+    /* --- Submit Button (Matches Add Policy) --- */
+    .btn-modern-submit {
+      width: 100%;
+      /* Solid color for update/success button */
+      background-color: var(--color-success);
+      color: var(--color-header-text);
+      font-weight: 700;
+      border: none;
+      border-radius: 16px;
+      padding: 12px 0;
+      font-size: 1.18em;
+      letter-spacing: 0.09em;
+      margin-top: 25px; /* Spacing from last field */
+      box-shadow: 0 2px 10px 1px rgba(76, 175, 80, 0.2);
+      transition: background-color 0.18s, box-shadow 0.18s;
+    }
+
+    .btn-modern-submit:hover, .btn-modern-submit:focus {
+      background-color: #45a049;
+      box-shadow: 0 4px 22px 2px rgba(76, 175, 80, 0.3);
+    }
+
+    /* Responsive adjustment: stack columns on small screens */
+    @media (max-width: 768px) {
+        .two-column-wrapper {
+            flex-direction: column;
+            max-width: 440px;
+        }
+        .image-container {
+            width: 100%;
+            height: 120px;
+        }
+        .form-content-wrapper {
+            width: 100%;
+            padding: 25px;
+        }
+        /* Stack the form fields vertically on small screens */
+        .form-row-compact {
+            flex-direction: column;
+            gap: 0;
+        }
+    }
+
+    @media (max-width: 500px) {
+      .form-content-wrapper { padding: 12px 7px 20px 7px; }
+      .modern-form-header { font-size: 1.33em; }
+    }
+  </style>
+</head>
+
+<div class="two-column-wrapper">
+
+  <div class="image-container">
+  </div>
+
+  <div class="form-content-wrapper">
+
+    <div class="modern-form-header">
+      <i class="fas fa-user-edit"></i> UPDATE CUSTOMER
+    </div>
+
+    <form method="post" autocomplete="off" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="form-row-compact">
+          <div class="form-group">
+            <label for="{{ userForm.first_name.id_for_label }}"><i class="fas fa-user"></i> First Name</label>
+            {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+          </div>
+          <div class="form-group">
+            <label for="{{ userForm.last_name.id_for_label }}"><i class="fas fa-user"></i> Last Name</label>
+            {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
+          </div>
+      </div>
+
+      <div class="form-row-compact">
+          <div class="form-group">
+            <label for="{{ customerForm.mobile.id_for_label }}"><i class="fas fa-phone"></i> Contact</label>
+            {% render_field customerForm.mobile class="form-control" placeholder="Contact" %}
+          </div>
+          <div class="form-group">
+            <label for="{{ customerForm.address.id_for_label }}"><i class="fas fa-map-marker-alt"></i> Address</label>
+            {% render_field customerForm.address class="form-control" placeholder="Address" %}
+          </div>
+      </div>
+
+      <div class="form-row-compact">
+          <div class="form-group">
+            <label for="{{ userForm.username.id_for_label }}"><i class="fas fa-id-badge"></i> Username</label>
+            {% render_field userForm.username class="form-control" placeholder="Username" %}
+          </div>
+          <div class="form-group">
+            <label for="{{ userForm.password.id_for_label }}"><i class="fas fa-lock"></i> Password</label>
+            {% render_field userForm.password class="form-control" placeholder="Password" %}
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="{{ customerForm.profile_pic.id_for_label }}"><i class="fas fa-camera"></i> Profile Picture</label>
+        {% render_field customerForm.profile_pic class="form-control" %}
+      </div>
+
+      <button type="submit" class="btn btn-modern-submit">
+        <i class="fas fa-check-circle"></i> UPDATE
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+<br><br><br><br><br><br><br><br>
+{% endblock content %}

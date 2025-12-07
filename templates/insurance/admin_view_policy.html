@@ -1,0 +1,145 @@
+{% extends 'insurance/adminbase.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+  <style media="screen">
+    a:link {
+      text-decoration: none;
+    }
+
+    /* Primary Theme Colors (Purple/Slate Gradient) */
+    :root {
+        --color-purple: #5D54A4; /* Primary Purple */
+        --color-slate-blue: mediumslateblue; /* #7B68EE - Medium Slate Blue */
+        --color-hover: #4c4485; /* Darker purple for hover/accents */
+    }
+
+    /* Container for the view content */
+    .container-fluid-custom {
+        padding: 30px 20px;
+        background-color: #f8f9fa; /* Light background for contrast */
+    }
+
+    /* Main Card/Panel Style */
+    .view-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        padding: 0;
+    }
+
+    /* Panel Header Styling (Themed Gradient) */
+    .card-header-custom {
+        /* Vertical Gradient from Purple to Medium Slate Blue */
+        background: linear-gradient(180deg, var(--color-purple), var(--color-slate-blue));
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px 8px 0 0;
+        font-weight: 600;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    /* Table Styling */
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        /* Consistent Header background with the slate blue color */
+        background-color: var(--color-slate-blue);
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        vertical-align: middle;
+        padding: 12px;
+    }
+
+    .table tbody td {
+      text-align: center;
+      vertical-align: middle;
+      padding: 12px;
+    }
+
+    .table tbody tr:hover {
+      /* Subtle hover effect using lightened theme color */
+      background-color: rgba(93, 84, 164, 0.1);
+      transition: 0.3s ease;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* Remove unnecessary default margin */
+    .row {
+        margin: 0;
+    }
+
+    /* Specific styling for policy data columns */
+    .policy-name-column {
+        text-align: left !important;
+        font-weight: 500;
+    }
+    .monetary-value {
+        font-weight: 600;
+    }
+
+  </style>
+</head>
+
+<div class="container-fluid-custom">
+    <div class="view-card">
+
+        <div class="card-header-custom">
+            Policy Records
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped" id="dev-table">
+            <thead>
+              <tr>
+                <th style="width: 5%;">#</th>
+                <th style="width: 20%;">Policy Name</th>
+                <th style="width: 15%;">Category</th>
+                <th style="width: 15%;">Sum Assurance</th>
+                <th style="width: 10%;">Premium <br> (per month)</th>
+                <th style="width: 10%;">Tenure (Months)</th>
+                <th style="width: 15%;">Creation Date</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in policies %}
+              <tr>
+                <td> {{ forloop.counter }}</td>
+                <td class="policy-name-column"> {{t.policy_name}}</td>
+                <td> {{t.category}}</td>
+                <td class="monetary-value"> Ksh {{t.sum_assurance}}</td>
+                <td class="monetary-value"> Ksh {{t.premium}}</td>
+                <td> {{t.tenure}}</td>
+                <td>{{t.creation_date}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        {% if not policies %}
+        <div class="p-4 text-center text-muted">
+            No policies found.
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<br><br><br>
+{% endblock content %}

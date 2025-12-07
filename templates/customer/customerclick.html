@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("{% static 'image/customerbg.jpg' %}") no-repeat center center;
+      background-size: cover;
+      position: relative;
+      overflow: hidden;
+    }
+
+   /* Overlay for fading the background */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.8); /* adjust 0.6 → more/less fade */
+  z-index: 0;
+}
+
+    /* Hero container */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1000px;
+      width: 90%;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: 0.8s ease;
+    }
+
+    .hero.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-left {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-right: 20px;
+    }
+
+    .hero-left img {
+      max-width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    }
+
+    .hero-right {
+      flex: 1;
+      text-align: center;
+      padding-left: 20px;
+    }
+
+    .hero-right h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #00E0FF;
+    }
+
+    .hero-right p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+      opacity: 0.85;
+    }
+
+    .btn-modern {
+      padding: 12px 35px;
+      font-size: 18px;
+      border-radius: 50px;
+      border: none;
+      margin: 10px;
+      font-weight: 500;
+      text-decoration: none;
+      color: #fff;
+      transition: 0.3s ease;
+      display: inline-block;
+      box-shadow: 0 6px 18px rgba(0,180,216,0.35);
+    }
+
+    .btn-create {
+      background: #FF4D6D;
+    }
+
+    .btn-create:hover {
+      background: #E63758;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(230,77,109,0.55);
+    }
+
+    .btn-login {
+      background: #2EC4B6;
+    }
+
+    .btn-login:hover {
+      background: #21A395;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(46,196,182,0.55);
+    }
+
+    /* Responsive */
+    @media(max-width: 900px) {
+      .hero {
+        flex-direction: column;
+      }
+
+      .hero-left, .hero-right {
+        padding: 10px;
+      }
+
+      .hero-right h1 {
+        font-size: 2.2rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  {% include "insurance/navbar.html" %}
+
+  <div class="hero" id="heroSection">
+
+    <div class="hero-left">
+      <img src="{% static 'image/leftint.jpg' %}" alt="Insurance Illustration">
+    </div>
+
+    <div class="hero-right">
+<h1 style="color: #FFD700;">Welcome to InsuraCore</h1>
+<p class="text-white">Secure, Reliable & Modern Insurance Management</p>
+      <a class="btn-modern btn-create" href="customersignup" role="button">Create Your Account</a>
+      <a class="btn-modern btn-login" href="customerlogin" role="button">Login</a>
+    </div>
+
+  </div>
+
+
+  <script>
+    // Fade-in animation
+    window.addEventListener("load", () => {
+      document.getElementById("heroSection").classList.add("visible");
+    });
+  </script>
+
+</body>
+</html>

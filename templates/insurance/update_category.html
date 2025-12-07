@@ -1,0 +1,107 @@
+{% extends 'insurance/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+{% load static %}
+
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style media="screen">
+        /* Theme Colors */
+        :root {
+            --color-primary: #6C4CF5; /* Purple */
+            --color-secondary: #4FC3F7; /* Blue */
+            --color-input-border: #ced4da;
+            --color-shadow: rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- Form Container Styling --- */
+        .form-container-card {
+            max-width: 600px;
+            margin: 50px auto; /* Center the card horizontally */
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--color-shadow);
+        }
+
+        /* --- Header Styling --- */
+        .form-header {
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40;
+            padding-bottom: 10px;
+            border-bottom: 3px solid transparent;
+            /* Gradient Separator */
+            border-image: linear-gradient(90deg, var(--color-primary), var(--color-secondary)) 1;
+        }
+
+        /* --- Input Styling (Formal) --- */
+        .form-control {
+            border: 1px solid var(--color-input-border) !important;
+            border-radius: 6px !important;
+            padding: 10px 15px !important;
+            box-shadow: none !important;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--color-primary) !important;
+            box-shadow: 0 0 0 0.2rem rgba(108, 76, 245, 0.25) !important;
+        }
+
+        /* --- Submit Button (Gradient Flushy Style) --- */
+        .btn-update-flush {
+            width: 100%;
+            background: linear-gradient(90deg, var(--color-primary) 65%, var(--color-secondary) 100%);
+            color: #fff;
+            padding: 12px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(108, 76, 245, 0.2);
+        }
+
+        .btn-update-flush:hover {
+            background: linear-gradient(90deg, #5a3ed1 65%, #47b2c7 100%);
+            box-shadow: 0 6px 20px rgba(108, 76, 245, 0.3);
+        }
+
+        /* --- Label Styling --- */
+        label {
+            font-weight: 500;
+            color: #495057;
+            margin-top: 10px;
+            display: block; /* Ensure label takes full width */
+        }
+
+    </style>
+</head>
+
+<div class="form-container-card">
+    <h3 class="form-header">
+        <i class="fas fa-pen-square"></i> UPDATE CATEGORY
+    </h3>
+
+    <form method="post" autocomplete="off" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ categoryForm.category_name.id_for_label }}">Category Name</label>
+            {% render_field categoryForm.category_name class="form-control" placeholder="Enter new category name" %}
+        </div>
+
+        <button type="submit" class="btn-update-flush">
+            <i class="fas fa-sync-alt"></i> Update Category
+        </button>
+    </form>
+</div>
+
+{% endblock content %}

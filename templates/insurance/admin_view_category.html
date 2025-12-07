@@ -1,0 +1,143 @@
+{% extends 'insurance/adminbase.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+  <style media="screen">
+    a:link {
+      text-decoration: none;
+    }
+
+    /* Primary Theme Colors (Vibrant Purple Mix Gradient) */
+    :root {
+        --color-slate-blue: #6A5ACD; /* Start color */
+        --color-deep-purple: #8E44AD; /* End color */
+        --color-header-bg: #7B68EE; /* Solid header background (mediumslate) */
+        --color-hover: #5A4BA8; /* Darker slate for hover/accents */
+    }
+
+    /* Container for the view content */
+    .container-fluid-custom {
+        padding: 30px 20px;
+        background-color: #f8f9fa; /* Light background for contrast */
+    }
+
+    /* Main Card/Panel Style */
+    .view-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        padding: 0;
+    }
+
+    /* Panel Header Styling (Themed Gradient) */
+    .card-header-custom {
+        /* Horizontal Gradient from Slate Blue to Deep Purple */
+        background: linear-gradient(90deg, var(--color-slate-blue), var(--color-deep-purple));
+        color: white; /* White text for better contrast on dark gradient */
+        padding: 15px 20px;
+        border-radius: 8px 8px 0 0;
+        font-weight: 700;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    /* Table Styling */
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        /* Using a solid color that fits the gradient for table header background */
+        background-color: var(--color-header-bg);
+        color: white;
+        font-weight: 600;
+        vertical-align: middle;
+        padding: 12px;
+    }
+
+    /* 💡 KEY FIX: Aligning the Category Name header to the left */
+    .table thead th {
+      text-align: center; /* Default alignment */
+    }
+
+    .table thead th.align-left {
+        text-align: left !important;
+    }
+
+    .table tbody td {
+      text-align: center;
+      vertical-align: middle;
+      padding: 12px;
+    }
+
+    .table tbody tr:hover {
+      /* Subtle hover effect using a lightened slate blue */
+      background-color: rgba(106, 90, 205, 0.1);
+      transition: 0.3s ease;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* Remove unnecessary default margin */
+    .row {
+        margin: 0;
+    }
+
+    /* Specific styling for category name column (data) */
+    .category-name-column {
+        /* Ensures data is left-aligned */
+        text-align: center !important;
+        font-weight: 500;
+    }
+
+  </style>
+</head>
+
+<div class="container-fluid-custom">
+    <div class="view-card">
+
+        <div class="card-header-custom">
+            Policy Categories
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped" id="dev-table">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th class="align-center" style="width: 50%;">Category Name</th>
+                <th style="width: 40%;">Creation Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in categories %}
+              <tr>
+                <td> {{ forloop.counter }}</td>
+                <td class="category-name-column align-center"> {{t.category_name}}</td>
+                <td>{{t.creation_date}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        {% if not categories %}
+        <div class="p-4 text-center text-muted">
+            No policy categories found.
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<br><br><br>
+{% endblock content %}

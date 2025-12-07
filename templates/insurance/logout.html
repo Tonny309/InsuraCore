@@ -1,0 +1,135 @@
+s{%load static%}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Logged Out</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+      /* --- Base Colors & Layout --- */
+      :root {
+          --color-bg-light: #f4f6f9;
+          --color-card-bg: #ffffff;
+          --color-primary: #6C4CF5; /* Violet */
+          --color-success: #28a745; /* Green */
+          --color-text-dark: #34495e;
+      }
+      body {
+          background-color: var(--color-bg-light);
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+          margin: 0;
+          font-family: 'Arial', sans-serif;
+      }
+
+      /* Push content to center, compensating for fixed header/footer */
+      .main-content {
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-top: 50px; /* Space for a fixed navbar if used */
+          padding-bottom: 50px; /* Space for a fixed footer if used */
+      }
+
+      /* --- Logout Card Styling --- */
+      .logout-card {
+          background-color: var(--color-card-bg);
+          border-radius: 20px;
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+          padding: 40px;
+          max-width: 500px;
+          width: 90%;
+          text-align: center;
+          opacity: 0; /* Start hidden for animation */
+          transform: translateY(20px); /* Start slightly below for animation */
+          animation: fadeInSlideUp 0.8s ease-out forwards; /* Apply animation */
+          border-top: 5px solid var(--color-success);
+      }
+
+      .logout-icon-wrapper {
+          width: 80px;
+          height: 80px;
+          margin: 0 auto 20px auto;
+          background-color: var(--color-success);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+          transform: scale(0.8); /* Start smaller for animation */
+          animation: iconPop 0.6s ease-out 0.5s forwards; /* Delay icon animation */
+      }
+
+      .logout-icon {
+          color: var(--color-card-bg);
+          font-size: 38px;
+      }
+
+      .logout-title {
+          font-size: 2rem;
+          font-weight: 700;
+          color: var(--color-text-dark);
+          margin-bottom: 10px;
+      }
+
+      .logout-message {
+          font-size: 1.1rem;
+          color: #6c757d;
+          line-height: 1.6;
+      }
+
+      /* --- Animation Keyframes --- */
+      @keyframes fadeInSlideUp {
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes iconPop {
+          0% { transform: scale(0.8); }
+          50% { transform: scale(1.15); }
+          100% { transform: scale(1); }
+      }
+
+
+    </style>
+  </head>
+  <body>
+
+    <div class="main-content">
+        <div class="logout-card">
+
+            <div class="logout-icon-wrapper">
+                <i class="fas fa-check-circle logout-icon"></i>
+            </div>
+
+            <h2 class="logout-title">
+                Logged Out Successfully!
+            </h2>
+
+            <p class="logout-message">
+                Your session has ended securely. Thank you for using our system, and we hope to see you again soon.
+            </p>
+
+            <br>
+{% comment %} ORIGINAL: {% url 'index' %} {% endcomment %}
+
+<a href="/" class="btn btn-lg btn-outline-primary" style="border-radius: 12px; font-weight: 600;">
+    <i class="fas fa-home"></i> Go to Homepage
+{#</a>                <i class="fas fa-home"></i> Go to Homepage#}
+            </a>
+
+        </div>
+    </div>
+
+    <div class="footer-placeholder">
+        {% include "insurance/footer.html" %}
+    </div>
+
+  </body>
+</html>

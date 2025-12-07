@@ -1,0 +1,156 @@
+{% extends 'insurance/adminbase.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+  <style media="screen">
+    a:link {
+      text-decoration: none;
+    }
+
+    /* Primary Theme Color (Deep Gold/Amber - Solid) */
+    :root {
+        --color-pending-header: #FFB300; /* Deep Gold/Amber */
+        --color-pending-badge: #ffc107; /* Standard Yellow/Amber for the badge */
+        --color-header-text: #333333; /* Dark text for contrast against bright header */
+    }
+
+    /* Container for the view content */
+    .container-fluid-custom {
+        padding: 30px 20px;
+        background-color: #f8f9fa;
+    }
+
+    /* Main Card/Panel Style */
+    .view-card {
+        background: #F5F7FA;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        padding: 0;
+    }
+
+    /* Panel Header Styling (Themed Solid Color) */
+    .card-header-custom {
+        /* Solid Deep Gold/Amber Color */
+      background: #1E88E5;
+        color: bisque;
+        padding: 15px 20px;
+        border-radius: 8px 8px 0 0;
+        font-weight: 700;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    /* Table Styling */
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        /* Header background based on the solid theme color */
+        background-color: #0288D1;
+        color:black;
+        font-weight: 600;
+        vertical-align: middle;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .table tbody td {
+      vertical-align: middle;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .table tbody tr:hover {
+      background-color: rgba(255, 179, 0, 0.05); /* Subtle hover effect based on theme color */
+      transition: 0.3s ease;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* Specific styling for data columns */
+    .text-center-data {
+        text-align: center !important;
+    }
+    .text-left-data {
+        text-align: center !important;
+    }
+
+    /* Status Badges */
+    .status-badge {
+        padding: .4em .7em;
+        font-weight: 600;
+        border-radius: .25rem;
+        font-size: 85%;
+        /* Dark text for better contrast on a light badge color */
+        color: #343a40;
+        min-width: 100px;
+        display: inline-block;
+        text-transform: uppercase;
+        background-color:#FFB300;
+    }
+
+    /* Fix container class usage */
+    .container {
+        max-width: 1300px;
+        padding: 0 15px;
+    }
+  </style>
+</head>
+
+<div class="container container-fluid-custom">
+  <div class="view-card">
+
+    <div class="card-header-custom">
+     Pending Policy Holder Records
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover table-striped" id="dev-table">
+        <thead>
+          <tr>
+            <th style="width: 5%;">#</th>
+            <th style="width: 35%;">Policy</th>
+            <th style="width: 30%;">Customer</th>
+            <th style="width: 15%;">Applied Date</th>
+            <th style="width: 15%;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in policyrecords %}
+          <tr>
+            <td class="text-center-data"> {{ forloop.counter }}</td>
+            <td class="text-left-data"> {{t.Policy}}</td>
+            <td class="text-left-data"> {{t.customer}}</td>
+
+            <td class="text-center-data">{{t.creation_date}}</td>
+
+            <td class="text-center-data">
+                <span class="status-badge">{{t.status}}</span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if not policyrecords %}
+    <div class="p-4 text-center text-muted">
+        No waiting (pending) policy holder records found.
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<br><br><br><br><br><br>
+{% endblock content %}

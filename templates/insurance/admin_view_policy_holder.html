@@ -1,0 +1,193 @@
+{% extends 'insurance/adminbase.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+  <style media="screen">
+    a:link {
+      text-decoration: none;
+    }
+
+    /* Primary Theme Colors (Vibrant Purple Mix Gradient) */
+    :root {
+        --color-slate-blue: #6A5ACD; /* Start color */
+        --color-deep-purple: #8E44AD; /* End color */
+        --color-header-bg: #7B68EE; /* Solid header background (mediumslate) */
+        --color-success: #28a745;
+        --color-danger: #dc3545;
+        --color-pending: #ffc107;
+    }
+
+    /* Container for the view content */
+    .container-fluid-custom {
+        padding: 30px 20px;
+        background-color: #f8f9fa;
+    }
+
+    /* Main Card/Panel Style */
+    .view-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        padding: 0;
+    }
+
+    /* Panel Header Styling (Themed Gradient) */
+    .card-header-custom {
+        /* Horizontal Gradient from Slate Blue to Deep Purple */
+        background: linear-gradient(90deg, var(--color-slate-blue), var(--color-deep-purple));
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px 8px 0 0;
+        font-weight: 700;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    /* Table Styling */
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        /* Consistent Header background with the solid theme color */
+        background-color: var(--color-header-bg);
+        color: #fff;
+        font-weight: 600;
+        vertical-align: middle;
+        padding: 12px;
+    }
+
+    .table tbody td {
+      vertical-align: middle;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .table tbody tr:hover {
+      background-color: rgba(106, 90, 205, 0.05); /* Subtle hover effect */
+      transition: 0.3s ease;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* Specific styling for data columns */
+    .text-center-data {
+        text-align: center !important;
+    }
+    .text-left-data {
+        text-align: left !important;
+    }
+
+    /* Status Badges */
+    .status-badge {
+        padding: .4em .7em;
+        font-weight: 600;
+        border-radius: .25rem;
+        font-size: 85%;
+        color: white;
+        min-width: 90px;
+        display: inline-block;
+        text-transform: uppercase;
+    }
+    .badge-pending { background-color: var(--color-pending); color: #343a40; }
+    .badge-approved { background-color: var(--color-success); }
+    .badge-rejected { background-color: var(--color-danger); }
+
+    /* Action Buttons */
+    .action-btn {
+      min-width: 80px;
+      padding: 6px 12px;
+      margin: 2px;
+      font-weight: 500;
+      border-radius: 50px; /* Pill shape */
+      font-size: 90%;
+    }
+
+    /* Ensure action column aligns properly */
+    .action-column {
+      min-width: 240px;
+      text-align: center;
+    }
+
+    /* Fix container class usage */
+    .container {
+        max-width: 1300px;
+        padding: 0 15px;
+    }
+  </style>
+</head>
+
+<div class="container container-fluid-custom">
+  <div class="view-card">
+
+    <div class="card-header-custom">
+      Policy Holder Records
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover table-striped" id="dev-table">
+        <thead>
+          <tr>
+            <th style="width: 5%;">#</th>
+            <th style="width: 30%;">Policy</th>
+            <th style="width: 25%;">Customer</th>
+            <th style="width: 15%;">Applied Date</th>
+            <th style="width: 10%;">Status</th>
+            <th class="action-column">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in policyrecords %}
+          <tr>
+            <td class="text-center-data"> {{ forloop.counter }}</td>
+            <td class="text-left-data"> {{t.Policy}}</td>
+            <td class="text-left-data"> {{t.customer}}</td>
+
+            <td class="text-center-data">{{t.creation_date}}</td>
+
+            <td class="text-center-data">
+                {% if t.status == 'Pending' %}
+                    <span class="status-badge badge-pending">Pending</span>
+                {% elif t.status == 'Approved' %}
+                    <span class="status-badge badge-approved">Approved</span>
+                {% else %}
+                    <span class="status-badge badge-rejected">Rejected</span>
+                {% endif %}
+            </td>
+
+            <td class="action-column">
+              {% if t.status == 'Pending' %}
+                <a class="btn btn-success action-btn" style="color: white;" href="{% url 'approve-request' t.id  %}">Approve</a>
+                <a class="btn btn-danger action-btn" style="color: white;" href="{% url 'reject-request' t.id  %}">Reject</a>
+              {% else %}
+                <span class="status-badge {% if t.status == 'Approved' %}badge-approved{% else %}badge-rejected{% endif %}" style="min-width: 160px;">
+                    **{{t.status}}**
+                </span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if not policyrecords %}
+    <div class="p-4 text-center text-muted">
+        No policy holder records found.
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<br><br><br><br><br><br>
+{% endblock content %}

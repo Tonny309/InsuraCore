@@ -1,0 +1,166 @@
+{% extends 'insurance/adminbase.html' %}
+{% block content %}
+{% load static %}
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+  <style>
+    a {
+      text-decoration: none;
+    }
+
+    /* Primary Theme Color */
+    :root {
+        --theme-purple: #5D54A4;
+        --theme-purple-dark: #4c4485;
+        --theme-green: #28A745;
+        --theme-red: #DC3545;
+    }
+
+    /* Container for the view content */
+    .container-fluid-custom {
+        padding-top: 0;
+        {#padding: 30px 20px;#}
+        background-color: #f8f9fa; /* Light background for contrast */
+    }
+
+    /* Main Card/Panel Style */
+    .view-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        padding: 0;
+    }
+
+    /* Panel Header Styling (Replacing Marquee) */
+    .card-header-custom {
+        background-color: var(--theme-purple);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px 8px 0 0;
+        font-weight: 600;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    /* Table Styling */
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        background-color: var(--theme-purple); /* Themed color header */
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        vertical-align: middle;
+        padding: 12px;
+    }
+
+    .table tbody td {
+      text-align: center;
+      vertical-align: middle;
+      padding: 12px;
+    }
+
+    .table tbody tr:hover {
+      background-color: rgba(93, 84, 164, 0.1); /* Light hover effect using theme color */
+      transition: 0.3s ease;
+    }
+
+    /* Profile Picture Styling */
+    .table img {
+      border-radius: 50%;
+      object-fit: cover;
+      height: 50px;
+      width: 50px;
+      border: 2px solid #ddd;
+    }
+
+    /* Action Button Standardization */
+    .btn-update-custom {
+      background-color: var(--theme-purple);
+      border-color: var(--theme-purple);
+      color: white;
+      transition: 0.3s ease;
+      padding: 6px 10px;
+    }
+    .btn-update-custom:hover {
+      background-color: var(--theme-purple-dark);
+      border-color: var(--theme-purple-dark);
+      color: white;
+    }
+
+    .btn-delete-custom {
+      background-color: var(--theme-red);
+      border-color: var(--theme-red);
+      color: white;
+      transition: 0.3s ease;
+      padding: 6px 10px;
+    }
+    .btn-delete-custom:hover {
+      background-color: #bd2130;
+      border-color: #bd2130;
+      color: white;
+    }
+
+  </style>
+</head>
+
+<div class="container-fluid-custom">
+    <div class="view-card">
+
+        <div class="card-header-custom">
+            Customer Records
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped" id="dev-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Profile Picture</th>
+                <th>Contact Number</th> <th>Address</th>
+                <th>Update</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in customers %}
+              <tr>
+                <td>{{ t.get_name }}</td>
+                <td><img src="{% static t.profile_pic.url %}" alt="Profile Pic"></td>
+                <td>{{ t.mobile }}</td>
+                <td>{{ t.address }}</td>
+                <td>
+                  <a class="btn btn-update-custom btn-sm" href="{% url 'update-customer' t.id %}">
+                    <span class="fa fa-edit"></span> Update
+                  </a>
+                </td>
+                <td>
+                  <a class="btn btn-delete-custom btn-sm" href="{% url 'delete-customer' t.id %}">
+                    <span class="fa fa-trash"></span> Delete
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        {% if not customers %}
+        <div class="p-4 text-center text-muted">
+            No customer records found.
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<br><br><br>
+{% endblock content %}

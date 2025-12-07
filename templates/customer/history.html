@@ -1,0 +1,201 @@
+{% extends 'customer/customerbase.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style media="screen">
+  /* --- COLOR DEFINITIONS (Based on your provided palette) --- */
+  :root {
+      --color-primary-violet: #6C4CF5;      /* Accent/Links */
+      --color-apply-green: #28a745;         /* Success Green (for check buttons) */
+      --color-delete-red: #dc3545;          /* Danger Red (for delete buttons - not used here but defined for consistency) */
+      --color-body-bg: #f5f5f9;             /* Light background for the page */
+      --color-table-header-bg: #4C51BF;     /* Dark Blue/Violet Header (Matching the primary table header in reference image) */
+      --color-header-text: #ffffff;         /* White Text on dark header */
+      --color-table-header-text: #454a60;   /* Secondary Dark Gray for text */
+      --color-text-dark: #34495e;           /* General Dark Text */
+      --color-bg-white: #ffffff;            /* Row Background */
+  }
+
+  body {
+      background-color: var(--color-body-bg);
+  }
+
+  /* --- Layout and Table Structure --- */
+
+  .container-fluid-custom {
+    /* UPDATED FOR FULL SCREEN: Set max-width to none and use a high percentage width */
+    width: 98%;
+    max-width: none;
+  }
+
+  /* Simple Title Header (Replacing panel heading) */
+  .section-title {
+      color: var(--color-table-header-bg);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      text-align: center;
+      letter-spacing: 0.5px;
+  }
+
+  /* Table Container Card (To hold the shadow effect around the table) */
+  .table-container-card {
+      border-radius: 8px;
+      background: var(--color-bg-white);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+  }
+
+  /* --- Table Styling (EXACTLY Matching Image 936e3d.png) --- */
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  /* Table Header: Dark Blue/Violet Solid Color */
+  .styled-table thead th {
+    background-color: var(--color-table-header-bg);
+    color: var(--color-header-text);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 0.9em;
+    border: none;
+    vertical-align: middle;
+    text-align: left; /* Default alignment */
+    padding: 14px 15px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .styled-table thead th:last-child {
+      border-right: none;
+      text-align: center; /* Action column centered */
+  }
+
+  /* Table Body Styling */
+  .styled-table tbody td {
+    color: var(--color-text-dark);
+    font-size: 0.95rem;
+    border-bottom: 1px solid #e9ecef; /* Very light gray separator */
+    vertical-align: middle;
+    text-align: left; /* Default alignment */
+    padding: 12px 15px;
+    transition: background 0.2s;
+    background-color: var(--color-bg-white);
+  }
+
+  /* Interactive Hover Effect (Light gray stripe hover from image) */
+  .styled-table tbody tr:hover td {
+    background: #f8f9fa !important;
+    cursor: default;
+  }
+
+  /* Center text in Status and Action columns */
+  .styled-table tbody td:nth-child(3), /* Applied Date */
+  .styled-table tbody td:nth-child(4), /* Status */
+  .styled-table tbody td:nth-child(5) { /* Action (if present) */
+      text-align: center;
+  }
+
+  /* Policy Name Highlight */
+  .styled-table td.policy-name-data {
+    font-weight: 500;
+    color: var(--color-primary-violet); /* Using primary color for emphasis */
+  }
+
+  /* Status styling for better visibility (optional but good practice) */
+  .status-pending { color: #ffc107; font-weight: 600; }
+  .status-approved { color: var(--color-apply-green); font-weight: 600; }
+  .status-disapproved { color: var(--color-delete-red); font-weight: 600; }
+
+  /* Responsive adjustment for small screens */
+  @media (max-width: 768px) {
+      .styled-table thead {
+          display: none;
+      }
+      .styled-table tbody tr {
+          display: block;
+          margin-bottom: 15px;
+          border: 1px solid #e9ecef;
+          border-radius: 8px;
+      }
+      .styled-table tbody td {
+          display: block;
+          text-align: right !important;
+          padding-left: 50%;
+          position: relative;
+      }
+      .styled-table tbody td:before {
+          content: attr(data-label);
+          position: absolute;
+          left: 10px;
+          width: 45%;
+          padding-right: 10px;
+          white-space: nowrap;
+          text-align: left;
+          font-weight: 600;
+          color: var(--color-table-header-text);
+      }
+      .styled-table td.policy-name-data {
+           text-align: right !important;
+      }
+  }
+</style>
+</head>
+
+<div class="container-fluid container-fluid-custom">
+
+    <div class="section-title">
+        Policy Application History
+    </div>
+
+    <div class="table-container-card">
+        <div class="table-responsive">
+          <table class="table styled-table" id="dev-table">
+            <thead>
+              <tr>
+                <th style="width: 5%;">#</th>
+                <th style="width: 55%;">Policy Name</th>
+                <th style="width: 20%; text-align: center;">Applied Date</th>
+                <th style="width: 20%; text-align: center;">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in policies %}
+              <tr>
+                <td data-label="#">{{ forloop.counter }}</td>
+                <td data-label="Policy Name" class="policy-name-data">{{t.Policy}}</td>
+                <td data-label="Applied Date">{{t.creation_date}}</td>
+                <td data-label="Status">
+                    {% if t.status == 'Pending' %}
+                        <span class="status-pending">{{t.status}}</span>
+                    {% elif t.status == 'Approved' %}
+                        <span class="status-approved">{{t.status}}</span>
+                    {% elif t.status == 'Disapproved' %}
+                        <span class="status-disapproved">{{t.status}}</span>
+                    {% else %}
+                        {{t.status}}
+                    {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="4" class="text-center">
+                  <div class="no-policies-styled">
+                    No policy application history found.
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+    </div>
+</div>
+
+<br><br><br><br><br><br>
+{% endblock content %}

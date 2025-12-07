@@ -1,0 +1,165 @@
+{% extends 'customer/customerbase.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style media="screen">
+    :root {
+        --color-primary-link: #17a2b8;
+        --color-table-header-bg: #1c3d52;
+        --color-header-text: #ffffff;
+        --color-text-dark: #34495e;
+        --color-bg-white: #ffffff;
+    }
+
+    body {
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* FULL SCREEN FIX: Remove top margin to stick to nav bar, set width to 100% */
+    .container-fluid-custom {
+      padding: 0; /* Remove side padding for full bleed to screen edge */
+      width: 100%;
+      max-width: 100%;
+      margin-top: 0 !important; /* Forces zero space from the head/nav bar */
+    }
+
+    /* Title section styling within the full screen container */
+    .header-panel {
+        background-color: #ffffff;
+        padding: 30px 20px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .section-title {
+        color: var(--color-table-header-bg);
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0;
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+
+    /* Table Container - Removed rounding to look better on full screen edge */
+    .table-container-full {
+        background: var(--color-bg-white);
+        min-height: 80vh;
+    }
+
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+    }
+
+    .styled-table thead th {
+      background-color: var(--color-table-header-bg);
+      color: var(--color-header-text);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 0.95em;
+      border: none;
+      vertical-align: middle;
+      text-align: left;
+      padding: 20px 15px;
+    }
+
+    .styled-table tbody td {
+      color: var(--color-text-dark);
+      font-size: 0.95rem;
+      border-bottom: 1px solid #e9ecef;
+      vertical-align: middle;
+      text-align: left;
+      padding: 18px 15px;
+      transition: background 0.2s;
+    }
+
+    .styled-table tbody tr:hover td {
+      background: #f1f4f6 !important;
+      cursor: default;
+    }
+
+    .styled-table td.question-data {
+      font-weight: 500;
+      color: #1c3d52;
+    }
+
+    .styled-table td.comment-data {
+        color: #6c757d;
+        font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+        .styled-table thead { display: none; }
+        .styled-table tbody tr {
+            display: block;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+        .styled-table tbody td {
+            display: block;
+            text-align: right !important;
+            padding-left: 50%;
+            position: relative;
+            border-bottom: 1px solid #f8f9fa;
+        }
+        .styled-table tbody td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 15px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            text-align: left;
+            font-weight: 700;
+            color: var(--color-table-header-bg);
+        }
+    }
+  </style>
+</head>
+
+<div class="container-fluid container-fluid-custom">
+    <div class="header-panel">
+        <h2 class="section-title">
+            <i class="fas fa-question-circle"></i> Asked Question History
+        </h2>
+    </div>
+
+    <div class="table-container-full">
+        <div class="table-responsive">
+          <table class="table styled-table" id="dev-table">
+            <thead>
+              <tr>
+                <th style="width: 5%;">#</th>
+                <th style="width: 45%;">Question</th>
+                <th style="width: 35%;">Admin Comment</th>
+                <th style="width: 15%;">Asked Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in questions %}
+              <tr>
+                <td data-label="#">{{ forloop.counter }}</td>
+                <td data-label="Question" class="question-data">{{t.description}}</td>
+                <td data-label="Admin Comment" class="comment-data">
+                    {% if t.admin_comment %}
+                        {{t.admin_comment}}
+                    {% else %}
+                        <span class="text-muted">Pending admin review...</span>
+                    {% endif %}
+                </td>
+                <td data-label="Asked Date">{{t.asked_date}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

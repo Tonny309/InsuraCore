@@ -1,0 +1,125 @@
+{% extends 'customer/customerbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+{% load static %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style media="screen">
+        /* --- COLOR DEFINITIONS (Teal/Cyan Palette) --- */
+        :root {
+            --color-primary-accent: #17a2b8;     /* Soft Blue/Cyan for buttons/accents */
+            --color-secondary-dark: #1c3d52;     /* Deep Navy/Teal for titles */
+            --color-body-bg: #f5f5f9;            /* Light background for the page */
+            --color-card-bg: #ffffff;           /* White card background */
+            --color-text-dark: #34495e;          /* General Dark Text */
+            --color-border-light: #e0e6f8;       /* Light border */
+        }
+
+        body {
+            background-color: var(--color-body-bg);
+        }
+
+        /* --- Layout and Card Structure --- */
+
+        .container-custom {
+            padding: 30px 15px;
+            max-width: 800px; /* Constrain max width for better form appearance */
+            margin: 40px auto;
+        }
+
+        .feedback-card {
+            border-radius: 15px; /* Rounded corners for modern feel */
+            background: var(--color-card-bg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Elevated shadow */
+            padding: 40px;
+        }
+
+        /* --- Typography and Titles --- */
+
+        .section-title {
+            color: var(--color-secondary-dark);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* --- Form Styling --- */
+
+        .form-group label {
+            color: var(--color-text-dark);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid var(--color-border-light);
+            box-shadow: none;
+            transition: border-color 0.2s;
+            /* Ensure large text areas fit the style */
+            min-height: 150px;
+        }
+
+        .form-control:focus {
+            border-color: var(--color-primary-accent);
+            box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25); /* Cyan glow */
+        }
+
+        /* --- Button Styling --- */
+
+        .btn-ask-styled {
+            background-color: var(--color-primary-accent);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 20px;
+            display: block; /* Make button full width of the form */
+            width: 100%;
+        }
+
+        .btn-ask-styled:hover {
+            background-color: #138496; /* Darker shade of cyan */
+            transform: translateY(-1px);
+        }
+
+        /* Original styles for compatibility if customerbase.html needs them */
+        a:link {
+              text-decoration: none;
+        }
+        /* Removed sidebar_btn styles as they interfere with the layout and should be handled by the base template */
+    </style>
+</head>
+
+<div class="container-custom">
+    <h2 class="section-title">
+        <i class="far fa-comments"></i> Whats your Question?
+    </h2>
+
+    <div class="feedback-card">
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ questionForm.description.id_for_label }}">Let Us any quesry you may have</label>
+                {% render_field questionForm.description class="form-control" rows="6" placeholder="Type your Question here" %}
+            </div>
+
+            <button type="submit" class="btn btn-ask-styled">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+
+<br><br><br><br>
+{% endblock content %}

@@ -1,0 +1,262 @@
+{% extends 'insurance/adminbase.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style media="screen">
+    a:link {
+      text-decoration: none;
+    }
+
+    /* --- COLOR DEFINITIONS (Blue/Teal/Green Gradient Palette) --- */
+    :root {
+        --color-blue: #007bff;            /* Start Blue */
+        --color-teal: #00bcd4;            /* Middle Teal */
+        --color-green: #4CAF50;           /* End Green */
+        --color-header-text: #ffffff;     /* White Text on dark gradient */
+        --color-body-bg: #f3f7f8;         /* Very light cool gray background for the page */
+        --color-text-dark: #34495e;       /* General Dark Text */
+        --color-bg-white: #ffffff;        /* Background: Pure White for card body */
+        --color-border-light: #e0f2f1;     /* Light, blending border */
+        --color-row-stripe: #fbfdfe;      /* Very light stripe background */
+    }
+
+    /* Apply a light background color to the body area for full screen fit */
+    body {
+        background-color: var(--color-body-bg);
+    }
+
+    /* --- Layout and Card Structure --- */
+
+    /* Container: Full screen occupancy, professional padding */
+    .container-fluid-custom {
+      padding: 30px 15px;
+      margin-top: 0;
+    }
+
+    /* Main Card/Content Area */
+    .content-card {
+      border-radius: 12px;
+      background: var(--color-bg-white);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Elevated shadow */
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* STYLED CARD HEADER (Gradient Background) */
+    .card-header-styled {
+        /* Blue -> Teal -> Green Gradient */
+        background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-teal) 50%, var(--color-green) 100%);
+        color: var(--color-header-text);
+        padding: 22px 25px;
+        font-size: 1.6rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+    }
+    .card-header-styled .fa-edit {
+      color: var(--color-header-text);
+      font-size: 1.1em;
+    }
+
+    /* Content Body Padding */
+    .card-body-content {
+        padding: 25px 0;
+    }
+
+    /* --- Table Styling (Interactive Data Display) --- */
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+    }
+
+    /* Table Header: Darker solid color from the gradient blend */
+    .styled-table thead th {
+      background-color: #00897b; /* Dark Teal solid color */
+      color: var(--color-header-text);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 0.9em;
+      border: none;
+      vertical-align: middle;
+      text-align: center;
+      padding: 14px 5px;
+    }
+
+    /* Table Body Styling */
+    .styled-table tbody td {
+      color: var(--color-text-dark);
+      font-size: 0.95rem;
+      border-bottom: 1px solid var(--color-border-light);
+      vertical-align: middle;
+      text-align: center;
+      padding: 12px 5px;
+      transition: background 0.2s;
+      background-color: var(--color-bg-white);
+    }
+
+    /* Better Striping for Data Display */
+    .styled-table tbody tr:nth-child(even) td {
+        background-color: var(--color-row-stripe);
+    }
+
+    .styled-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Interactive Hover Effect */
+    .styled-table tbody tr:hover td {
+      background: rgba(0, 188, 212, 0.1) !important; /* Subtle Teal hover effect */
+      cursor: pointer;
+    }
+
+    /* Highlight important data (Policy Name) */
+    .styled-table td.policy-name-data {
+      text-align: left !important;
+      font-weight: 500;
+      color: var(--color-blue); /* Clear blue for policy name */
+    }
+
+    /* Update Button (Solid Green for clear action) */
+    .btn-update-styled {
+      background-color: var(--color-green);
+      color: var(--color-header-text);
+      border: none;
+      border-radius: 5px;
+      padding: 6px 15px;
+      font-size: 0.85em;
+      font-weight: 600;
+      transition: background-color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+    }
+    .btn-update-styled:hover {
+      background-color: #43A047;
+      box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+    }
+    .btn-update-styled .fa-edit {
+      color: var(--color-header-text);
+      margin-right: 5px;
+    }
+
+
+    /* No data text */
+    .no-policies-styled {
+      padding: 30px 0 10px 0;
+      color: #00897b;
+      font-size: 1em;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* Media Queries for full-screen responsiveness (retained from previous design) */
+    @media (max-width: 992px) {
+        .styled-table thead th, .styled-table tbody td { font-size: 0.9rem; padding: 10px 3px; }
+    }
+    @media (max-width: 768px) {
+        .table-responsive {
+            border: 1px solid var(--color-border-light);
+            border-radius: 8px;
+        }
+        .styled-table {
+            display: block;
+            width: 100%;
+        }
+        .styled-table thead {
+            display: none;
+        }
+        .styled-table tbody tr {
+            display: block;
+            margin-bottom: 15px;
+            border: 1px solid var(--color-border-light);
+            border-radius: 8px;
+        }
+        .styled-table tbody td {
+            display: block;
+            text-align: right !important;
+            padding-left: 50%;
+            position: relative;
+        }
+        .styled-table tbody td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 10px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            text-align: left;
+            font-weight: 600;
+            background-color: transparent; /* Ensure label background is transparent */
+            color: var(--color-text-dark);
+        }
+        .styled-table td.policy-name-data {
+             text-align: right !important;
+        }
+    }
+  </style>
+</head>
+
+<div class="container-fluid container-fluid-custom">
+
+  <div class="content-card">
+
+    <div class="card-header-styled">
+      <i class="fas fa-edit"></i> UPDATE EXISTING POLICIES
+    </div>
+
+    <div class="card-body-content">
+        <div class="table-responsive">
+          <table class="table styled-table" id="dev-table">
+            <thead>
+              <tr>
+                <th style="width: 5%;">#</th>
+                <th style="width: 20%; text-align: left;">Policy Name</th>
+                <th style="width: 15%;">Category</th>
+                <th style="width: 12%;">Sum Assurance</th>
+                <th style="width: 12%;">Premium</th>
+                <th style="width: 10%;">Tenure</th>
+                <th style="width: 20%;">Creation Date</th>
+                <th style="width: 6%;">Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in policies %}
+              <tr>
+                <td data-label="#">{{ forloop.counter }}</td>
+                <td data-label="Policy Name" class="policy-name-data">{{ t.policy_name }}</td>
+                <td data-label="Category">{{ t.category }}</td>
+                <td data-label="Sum Assurance">{{ t.sum_assurance }}</td>
+                <td data-label="Premium">{{ t.premium }}</td>
+                <td data-label="Tenure">{{ t.tenure }}</td>
+                <td data-label="Creation Date">{{ t.creation_date }}</td>
+                <td data-label="Update">
+                  <a class="btn btn-update-styled btn-sm" href="{% url 'update-policy' t.id  %}">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="8" class="text-center">
+                  <div class="no-policies-styled">
+                    No policies found to update. Please add a policy first.
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+    </div>
+
+  </div>
+</div>
+
+<br><br><br><br><br><br>
+{% endblock content %}

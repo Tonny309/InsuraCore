@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+
+  <style>
+    /* Page background and centering */
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(180deg, #f3f5ff 0%, #fafbff 100%);
+      color: #222;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Container that holds the card */
+    .page-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 90px 16px 60px; /* leave room for navbar */
+      min-height: calc(100vh - 160px);
+      box-sizing: border-box;
+    }
+
+    /* Card */
+    .contact-card {
+      width: 100%;
+      max-width: 820px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(18, 30, 90, 0.08);
+      overflow: hidden;
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    /* Left side illustration / info */
+    .contact-side {
+      flex: 0 0 260px;
+      padding: 28px;
+      background: linear-gradient(180deg, rgba(124, 118, 255, 0.12), rgba(124, 118, 255, 0.06));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .contact-side .avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: #fff;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(124,118,255,0.12);
+      font-size: 30px;
+      color: #6b63f5;
+      font-weight: 700;
+    }
+
+    .contact-side h4 {
+      margin: 6px 0 0;
+      color: #3a3a63;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .contact-side p {
+      margin: 8px 0 0;
+      color: #666887;
+      font-size: 13px;
+      line-height: 1.4;
+      padding: 0 6px;
+    }
+
+    /* Form area */
+    .contact-body {
+      flex: 1 1 auto;
+      padding: 28px 30px;
+    }
+
+    .contact-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .contact-header h3 {
+      margin: 0;
+      font-size: 20px;
+      color: #22234a;
+      letter-spacing: 0.1px;
+    }
+
+    .contact-header .lead {
+      color: #6b6f92;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    /* Style form output produced by {{ form.as_p }} */
+    .contact-form p {
+      margin: 0 0 14px;
+      display: block;
+    }
+
+    .contact-form p label {
+      display: block;
+      margin-bottom: 6px;
+      color: #444770;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form input[type="tel"],
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #e3e6f3;
+      background: #fff;
+      color: #202236;
+      font-size: 14px;
+      transition: border-color .12s ease, box-shadow .12s ease;
+    }
+
+    .contact-form textarea {
+      min-height: 130px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus,
+    .contact-form select:focus {
+      outline: none;
+      border-color: #7f7cff;
+      box-shadow: 0 6px 18px rgba(127, 124, 255, 0.08);
+    }
+
+    /* Error list (Django default) */
+    .contact-form .errorlist {
+      margin: 6px 0 0;
+      padding: 8px 10px;
+      background: #fff5f6;
+      border: 1px solid #ffd5d8;
+      color: #8a2630;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    /* Submit button */
+    .contact-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .btn-send {
+      background: linear-gradient(90deg, #6f66f8, #9b7cff);
+      color: #fff;
+      border: 0;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 26px rgba(111, 102, 248, 0.14);
+      transition: transform .08s ease, box-shadow .12s ease, opacity .12s;
+    }
+
+    .btn-send:active { transform: translateY(1px); }
+    .btn-send:hover { opacity: 0.98; }
+
+    /* Keep bootstrap alerts looking good in our card */
+    .contact-body .alert {
+      border-radius: 8px;
+      margin: 10px 0 16px;
+    }
+
+    /* Responsive behavior */
+    @media (max-width: 880px) {
+      .contact-card {
+        flex-direction: column;
+      }
+      .contact-side {
+        flex: 0 0 auto;
+        padding: 18px;
+      }
+      .contact-body {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .contact-body {
+        padding: 14px;
+      }
+      .contact-side {
+        padding: 14px;
+      }
+      .btn-send {
+        width: 100%;
+      }
+      .contact-actions { justify-content: stretch; }
+    }
+  </style>
+</head>
+
+<body>
+
+  {% include "insurance/navbar.html" %}
+  <div class="page-container">
+    <div class="contact-card" role="region" aria-label="Contact form">
+      <div class="contact-side" aria-hidden="false">
+        <div class="avatar">US</div>
+        <h4>Send Feedback</h4>
+        <p>We read every message and value your feedback. Use the form to send questions, suggestions or bug reports.</p>
+      </div>
+
+      <div class="contact-body">
+        <div class="contact-header">
+          <div>
+            <h3 class="mb-0">Send Us Your Valuable Feedback</h3>
+            <div class="lead">We'll get back to you as soon as possible.</div>
+          </div>
+        </div>
+
+        <!-- messages / alerts (keeps existing bootstrap alerts working) -->
+        {% if messages %}
+        <div>
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="POST" autocomplete="off" class="contact-form" novalidate>
+          {% csrf_token %}
+          <!-- Preserve form rendering: we only style it via CSS -->
+          {{ form.as_p }}
+
+          <div class="contact-actions">
+            <input type="submit" value="Send Message" class="btn-send">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% include "insurance/footer.html" %}
+</body>
+
+</html>

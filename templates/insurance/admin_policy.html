@@ -1,0 +1,239 @@
+{% extends 'insurance/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <style type="text/css">
+      /* General Link Styling */
+      a:link {
+        text-decoration: none;
+      }
+
+      /* Main Content Background - Subtle light gray to match image */
+      body {
+        background-color: #F8F9FA;
+      }
+
+      /* Dashboard Container */
+      .dashboard-content {
+        padding: 0 15px;
+      }
+
+      /* Dashboard Overview Banner */
+      .dashboard-banner {
+        background: #5D54A4; /* Exact purple from the image */
+        color: white;
+        padding: 15px 25px;
+        margin-bottom: 25px;
+        border-radius: 8px;
+        font-size: 1.5rem;
+        font-weight: 600;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+      }
+
+      /* Card Styling to match the white, rounded, shadowed design */
+      .card {
+        background: #FFFFFF;
+        border: none;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease-in-out;
+        /* Increased size: Set min-height a little higher */
+        min-height: 140px;
+      }
+
+      /* Hover Interactivity */
+      .card:hover {
+        transform: translateY(-5px); /* Lifts the card */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+        cursor: pointer;
+      }
+
+      /* Card Block/Body Padding */
+      .card .card-block {
+        /* Adjusted padding slightly for larger card size */
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+      }
+
+      /* Metric Title/Link */
+      .metric-title {
+        color: #555; /* Darker gray for text */
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 18px; /* Slightly increased spacing */
+        text-decoration: none;
+        display: block;
+      }
+
+      /* Metric Value and Icon Container */
+      .metric-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+
+      /* Metric Value (The big number) */
+      .metric-value {
+        font-size: 2.8rem; /* Slightly larger font for prominence */
+        font-weight: 700;
+        color: #343A40;
+        line-height: 1;
+      }
+
+      /* Metric Icon (The colored circular icon) */
+      .metric-icon {
+        /* Slightly larger icon container */
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+
+      /* Icon Colors (based on the image and original functionality) */
+      .icon-purple { background: #5D54A4; }
+      .icon-blue { background: #007BFF; }
+      .icon-green { background: #28A745; }
+      .icon-red { background: #DC3545; }
+      /* Note: Used for Applied Holders in the next row */
+      .icon-slate { background: #6A5ACD; }
+
+
+    </style>
+  </head>
+
+
+  <div class="container dashboard-content">
+
+    <div class="dashboard-banner text-center">
+        Policy Management Overview
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card">
+          <div class="card-block">
+            <a href="admin-view-policy" class="metric-title">View Policies</a>
+            <div class="metric-footer">
+              <div class="metric-value"></div>
+              <div class="metric-icon icon-blue"><i class="fas fa-eye"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card">
+          <div class="card-block">
+            <a href="admin-add-policy" class="metric-title">Add Policy</a>
+            <div class="metric-footer">
+              <div class="metric-value"></div>
+              <div class="metric-icon icon-green"><i class="fas fa-plus"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card">
+          <div class="card-block">
+            <a href="admin-update-policy" class="metric-title">Update Policy</a>
+            <div class="metric-footer">
+              <div class="metric-value"></div>
+              <div class="metric-icon icon-red"><i class="fas fa-edit"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card">
+          <div class="card-block">
+            <a href="admin-delete-policy" class="metric-title">Delete Policy</a>
+            <div class="metric-footer">
+              <div class="metric-value"></div>
+              <div class="metric-icon icon-purple"><i class="fas fa-trash"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card">
+          <div class="card-block">
+            <a href="admin-view-policy-holder" class="metric-title">Applied Holders</a>
+            <div class="metric-footer">
+                <div class="metric-value">{{total_policy_holder}}</div>
+                <div class="metric-icon icon-slate"><i class="fas fa-user-cog"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card">
+          <div class="card-block">
+            <a href="admin-view-approved-policy-holder" class="metric-title">Approved Holders</a>
+            <div class="metric-footer">
+                 <div class="metric-value">{{approved_policy_holder}}</div>
+                <div class="metric-icon icon-green"><i class="fas fa-user-check"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card">
+          <div class="card-block">
+            <a href="admin-view-disapproved-policy-holder" class="metric-title">Disapproved Holders</a>
+           <div class="metric-footer">
+                 <div class="metric-value">{{disapproved_policy_holder}}</div>
+                <div class="metric-icon icon-red"><i class="fas fa-user-times"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card">
+          <div class="card-block">
+            <a href="admin-view-waiting-policy-holder" class="metric-title">Pending Holders</a>
+            <div class="metric-footer">
+                <div class="metric-value">{{waiting_policy_holder}}</div>
+                <div class="metric-icon icon-blue"><i class="fas fa-user-clock"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<br><br><br><br><br><br><br><br><br><br>
+
+<script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+
+{% endblock content %}

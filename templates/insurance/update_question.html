@@ -1,0 +1,114 @@
+{% extends 'insurance/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+  <style>
+    body {
+      background: #f2f4f7 !important;  /* Very calm grey background */
+    }
+
+    /* CENTERED CARD */
+    .update-question-card {
+      margin: 45px auto 0 auto;
+      max-width: 540px;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 34px 32px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06); /* subtle, professional */
+      border: 1px solid #e3e6ea;               /* light border */
+    }
+
+    /* TITLE */
+    h3.update-title {
+      color: #2a3d5a;            /* calm navy */
+      font-weight: 700;
+      font-size: 1.9rem;
+      text-align: center;
+      margin-bottom: 22px;
+      letter-spacing: 0.01em;
+    }
+
+    /* LABELS */
+    .update-question-card label {
+      margin-top: 14px;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #4b5563;           /* calm grey */
+      font-size: 1rem;
+    }
+
+    /* INPUTS */
+    .form-control {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #ced4da;
+      background: #f9fafb;
+      border-radius: 8px;
+      margin-top: 4px;
+      font-size: 15px;
+      color: #334155;
+      transition: 0.2s ease;
+    }
+
+    .form-control:focus {
+      background: #ffffff;
+      border-color: #4f7ccf; /* soft calm blue */
+      box-shadow: 0 0 0 2px rgba(79,124,207,0.18);
+      outline: none;
+    }
+
+    /* SUBMIT BUTTON */
+    .btn-update {
+      width: 100%;
+      background-color: #4f7ccf;  /* soft corporate blue */
+      color: white;
+      padding: 14px 0;
+      margin-top: 28px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-update:hover,
+    .btn-update:focus {
+      background-color: #3e67b0;
+    }
+
+    @media (max-width: 700px) {
+      .update-question-card {
+        margin: 25px 6vw 0 6vw;
+        padding: 22px 6vw;
+      }
+      h3.update-title {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
+</head>
+
+<div>
+  <div class="update-question-card">
+    <h3 class="update-title">Update Question</h3>
+
+    <form method="post" autocomplete="off" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <label for="{{ questionForm.description.id_for_label }}">Question</label>
+      {% render_field questionForm.description class="form-control" placeholder="Enter the question description here" %}
+
+      <label for="admin_comment">Your Comment</label>
+      <input type="text" name="admin_comment" id="admin_comment" class="form-control"
+             placeholder="Add an administrative comment or response">
+
+      <button type="submit" class="btn-update">Update</button>
+    </form>
+  </div>
+</div>
+
+<br><br><br>
+{% endblock content %}

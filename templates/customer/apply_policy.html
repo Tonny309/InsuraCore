@@ -1,0 +1,214 @@
+{% extends 'customer/customerbase.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style media="screen">
+    /* --- COLOR DEFINITIONS (Based on your provided palette) --- */
+    :root {
+        --color-primary-violet: #6C4CF5;  /* Accent/Links */
+        --color-apply-green: #28a745;     /* Success Green for Apply Button */
+        --color-body-bg: #f5f5f9;         /* Light background for the page */
+        --color-table-header-bg: #4C51BF; /* Dark Blue/Violet Header (Matching the primary table header in reference images) */
+        --color-header-text: #ffffff;     /* White Text on dark header */
+        --color-table-header: #454a60;    /* Secondary Dark Gray for text */
+        --color-text-dark: #34495e;       /* General Dark Text */
+        --color-bg-white: #ffffff;        /* Row Background */
+        --color-border-light: #e0e6f8;    /* Light border for structure */
+    }
+
+    body {
+        background-color: var(--color-body-bg);
+    }
+
+    /* --- Layout and Table Structure --- */
+
+    .container-fluid-custom {
+      max-width: 1200px;
+      margin: 40px auto;
+    }
+
+    /* Simple Title Header (Replacing large card header) */
+    .section-title {
+        color: var(--color-table-header-bg);
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+
+    /* Card/Content Area (To hold the shadow effect around the table) */
+    .table-container-card {
+        border-radius: 8px;
+        background: var(--color-bg-white);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    /* --- Table Styling (Matching Admin Table Image) --- */
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+    }
+
+    /* Table Header: Dark Blue/Violet Solid Color */
+    .styled-table thead th {
+      background-color: var(--color-table-header-bg);
+      color: var(--color-header-text);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 0.9em;
+      border: none;
+      vertical-align: middle;
+      text-align: center;
+      padding: 14px 5px;
+      border-right: 1px solid rgba(255, 255, 255, 0.1); /* Subtle column separator */
+    }
+    .styled-table thead th:last-child {
+        border-right: none;
+    }
+
+    /* Table Body Styling */
+    .styled-table tbody td {
+      color: var(--color-text-dark);
+      font-size: 0.95rem;
+      border-bottom: 1px solid #e9ecef; /* Very light gray separator */
+      vertical-align: middle;
+      text-align: center;
+      padding: 12px 5px;
+      transition: background 0.2s;
+      background-color: var(--color-bg-white);
+    }
+
+    /* Interactive Hover Effect (Light gray/white stripe hover) */
+    .styled-table tbody tr:hover td {
+      background: #f8f9fa !important; /* Very light gray hover */
+      cursor: default;
+    }
+
+    /* Policy Name Alignment */
+    .styled-table td.policy-name-data {
+      text-align: left !important;
+      font-weight: 500;
+      color: var(--color-primary-violet);
+    }
+
+    /* Apply Button (Green Check/Square style from image) */
+    .btn-apply-styled {
+      background-color: var(--color-apply-green);
+      color: var(--color-header-text);
+      border: none;
+      border-radius: 3px; /* Smaller radius like the image */
+      padding: 5px 12px;
+      font-size: 0.85em;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+    .btn-apply-styled:hover {
+      background-color: #1e7e34;
+    }
+
+    /* No data text */
+    .no-policies-styled {
+      padding: 30px 0 30px 0;
+      color: var(--color-table-header);
+      font-size: 1.1em;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* Responsive adjustment for small screens */
+    @media (max-width: 768px) {
+        .styled-table thead {
+            display: none;
+        }
+        .styled-table tbody tr {
+            display: block;
+            margin-bottom: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+        }
+        .styled-table tbody td {
+            display: block;
+            text-align: right !important;
+            padding-left: 50%;
+            position: relative;
+        }
+        .styled-table tbody td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 10px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-table-header);
+        }
+        .styled-table td.policy-name-data {
+             text-align: right !important;
+        }
+    }
+  </style>
+</head>
+
+<div class="container-fluid container-fluid-custom">
+
+    <div class="section-title">
+        Available Policies
+    </div>
+
+    <div class="table-container-card">
+        <div class="table-responsive">
+          <table class="table styled-table" id="dev-table">
+            <thead>
+              <tr>
+                <th style="width: 3%;">#</th>
+                <th style="width: 20%; text-align: left;">Policy Name</th>
+                <th style="width: 15%;">Category</th>
+                <th style="width: 15%;">Sum Assurance</th>
+                <th style="width: 12%;">Premium</th>
+                <th style="width: 10%;">Tenure</th>
+                <th style="width: 17%;">Creation Date</th>
+                <th style="width: 8%;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in policies %}
+              <tr>
+                <td data-label="#">{{ forloop.counter }}</td>
+                <td data-label="Policy Name" class="policy-name-data">{{ t.policy_name }}</td>
+                <td data-label="Category">{{ t.category }}</td>
+                <td data-label="Sum Assurance">{{ t.sum_assurance }}</td>
+                <td data-label="Premium">{{ t.premium }}</td>
+                <td data-label="Tenure">{{ t.tenure }}</td>
+                <td data-label="Creation Date">{{ t.creation_date }}</td>
+                <td data-label="Action">
+                  <a class="btn btn-apply-styled btn-sm" href="{% url 'apply' t.id  %}">
+                    <i class="fas fa-check"></i> Apply
+                  </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="8" class="text-center">
+                  <div class="no-policies-styled">
+                    No policies are currently available to apply for.
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+    </div>
+</div>
+
+<br><br><br><br><br><br>
+{% endblock content %}

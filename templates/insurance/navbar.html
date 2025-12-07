@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+    :root {
+      /* Deep Black background */
+      --navbar-bg: #0d0d0d;
+      /* Golden/Amber color for links and accents */
+      --accent-golden: #FFD700;
+      --text-light: #ffffff;
+      --text-dark: #f0f0f0;
+        --secondary-color: #1a1a2e; /* Deep dark blue/black */
+    }
+
+    .bs-example {
+      margin: 0;
+    }
+
+    /* --- Navbar Styling --- */
+    .navbar {
+      background-color: var(--secondary-color) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle Shadow for modern look */
+      padding: 0.75rem 1rem;
+    }
+    /* --- Logo Styling --- */
+    .navbar-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-light) !important;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: color 0.3s;
+      letter-spacing: 0.5px;
+    }
+
+    .navbar-brand:hover {
+        color: var(--accent-golden) !important;
+    }
+
+    .logo-icon {
+      font-size: 1.8rem;
+      margin-right: 8px;
+      color: var(--accent-golden);
+    }
+
+    /* --- Navigation Links --- */
+    .nav-item.nav-link {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      {#color: var(--accent-golden) !important; /* Golden Text Color */#}
+              color: dodgerblue!important; /* Golden Text Color */
+
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+    }
+
+    .nav-item.nav-link:hover {
+      color: var(--text-light) !important;
+      background-color: rgba(255, 215, 0, 0.1); /* Golden background hover effect */
+      transform: translateY(-1px); /* Slight lift effect */
+      box-shadow: 0 2px 5px rgba(255, 215, 0, 0.15);
+    }
+
+    .nav-item.nav-link i {
+        margin:0 15px;
+        font-size: 1.0rem;
+        color: dodgerblue;
+        transition: color 0.3s;
+    }
+
+    .nav-item.nav-link:hover i {
+        color: mediumslateblue; /* Icon color changes to white on hover */
+    }
+
+    /* --- Toggler Button for mobile --- */
+    .navbar-toggler {
+        border: 1px solid var(--accent-golden);
+        padding: 0.4rem;
+        transition: background-color 0.3s;
+    }
+    /* Customizing the toggler icon to be white/golden */
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 215, 0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+
+    /* Ensure links stack nicely on mobile */
+    @media (max-width: 768px) {
+        .navbar-nav {
+            margin-top: 10px;
+        }
+        .nav-item .nav-link {
+            padding-left: 0;
+        }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="bs-example">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+
+      <a class="navbar-brand" href="/">
+        <i class="fas fa-shield-alt logo-icon"></i> InsuraCore Solutions
+      </a>
+
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+
+        <div class="navbar-nav">
+          <p class="nav-item nav-link active"></p>
+        </div>
+
+        <div class="navbar-nav">
+
+          <a href="/customer/customerclick" class="nav-item nav-link">
+            <i class="fas fa-users"></i>
+            Customer
+          </a>
+
+          <a href="/adminlogin" class="nav-item nav-link">
+            <i class="fas fa-user-shield"></i>
+            Admin
+          </a>
+
+          <a href="/contactus" class="nav-item nav-link">
+            <i class="fas fa-envelope"></i>
+            Contact Us
+          </a>
+
+        </div>
+      </div>
+    </nav>
+  </div>
+
+
+</body>
+
+</html>

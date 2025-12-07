@@ -1,0 +1,210 @@
+{% extends 'insurance/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    {% load static %}
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* New/Updated Styles for Two-Column Layout */
+
+    /* 1. Main Wrapper to hold both image and form */
+    .two-column-wrapper {
+      max-width: 900px; /* Increased max width to fit two columns */
+      margin: 56px auto 22px auto;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 6px 32px 2px rgba(108,76,245,0.10);
+      display: flex; /* Enable flexbox for side-by-side columns */
+      overflow: hidden; /* Ensures borders/shadows look clean */
+    }
+
+    /* 2. Left Column: Image Container */
+    .image-container {
+      width: 40%; /* Image takes 40% of the space */
+      /* This is the background for the image placeholder */
+      background: linear-gradient(135deg, #6C4CF5 0%, #4FC3F7 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      /* Using a placeholder background image from the dashboard image for consistency */
+      background: url("{% static 'image/leftint.jpg' %}") no-repeat center center;
+      background-size: cover;
+    }
+
+    /* Style for the actual image inside the container (if you insert it) */
+    .image-container img {
+        width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 12px;
+    }
+
+    /* 3. Right Column: Form Content */
+    .form-content-wrapper {
+        width: 60%; /* Form takes 60% of the space */
+        padding: 38px 38px 32px 38px;
+    }
+
+    /* **NEW STYLES TO MIMIC THE APPOINTMENT FORM LAYOUT** */
+    .form-row-compact {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px; /* Spacing between fields */
+    }
+
+    .form-row-compact .form-group {
+        flex: 1 1 48%; /* Each group takes roughly half the space */
+        margin-bottom: 19px; /* Remove margin-bottom from the form-group inside the row, it's defined by the row */
+    }
+    /* End New Styles */
+
+
+    /* Ensure the header text is colored correctly inside the form wrapper */
+    .modern-form-header {
+      background: linear-gradient(90deg, #6C4CF5 60%, #4FC3F7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 2.1rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+
+    /* Existing Form Styles (retained) */
+    .modern-form label {
+      font-weight: 600;
+      margin-bottom: 7px;
+      color: #424a60;
+      font-size: 1.08em;
+      letter-spacing: .03em;
+    }
+
+    .modern-form .form-control,
+    .modern-form select.form-control {
+      border-radius: 14px;
+      border: 1.3px solid #6c4cf566;
+      background: #f7f8fc;
+      min-height: 46px;
+      font-size: 1.06em;
+      font-weight: 500;
+      box-shadow: 0 1px 6px rgba(108,76,245,0.04);
+      padding-left: 17px;
+      margin-bottom: 0; /* Remove default margin-bottom here, it's controlled by .form-group or .form-row-compact */
+      transition: border .2s, box-shadow .2s;
+    }
+
+    .modern-form .form-control:focus {
+      border: 2px solid #6C4CF5;
+      background: #fff;
+      box-shadow: 0 2px 12px 1px rgba(108,76,245,0.08);
+      outline: none;
+    }
+
+    .btn-modern-submit {
+      width: 100%;
+      background: linear-gradient(90deg, #6C4CF5 70%, #4FC3F7 100%);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      border-radius: 16px;
+      padding: 12px 0;
+      font-size: 1.18em;
+      letter-spacing: 0.09em;
+      margin-top: 25px; /* Increased margin top to separate from fields */
+      box-shadow: 0 2px 10px 1px rgba(108,76,245,0.08);
+      transition: background 0.18s, box-shadow 0.18s;
+    }
+
+    .btn-modern-submit:hover, .btn-modern-submit:focus {
+      background: linear-gradient(90deg, #6146E5 60%, #4FC3D7 100%);
+      color: #fff;
+      box-shadow: 0 4px 22px 2px rgba(108,76,245,0.10);
+    }
+
+    /* Responsive adjustment: stack columns on small screens */
+    @media (max-width: 768px) {
+        .two-column-wrapper {
+            flex-direction: column;
+            max-width: 440px; /* Revert to original max width for single column */
+        }
+        .image-container {
+            width: 100%;
+            height: 150px; /* Give it a fixed height when stacked */
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .form-content-wrapper {
+            width: 100%;
+            padding: 25px;
+        }
+        /* Stack the form fields vertically on small screens */
+        .form-row-compact {
+            flex-direction: column;
+            gap: 0;
+        }
+    }
+
+    @media (max-width: 500px) {
+      .form-content-wrapper { padding: 12px 7px 20px 7px; }
+      .modern-form-header { font-size: 1.33em; }
+    }
+  </style>
+</head>
+
+<div class="two-column-wrapper">
+
+  <div class="image-container">
+  </div>
+
+  <div class="form-content-wrapper">
+
+    <div class="modern-form-header">
+      <i class="fas fa-file-medical"></i> Add Policy
+    </div>
+
+    <form method="POST" autocomplete="off" class="modern-form">
+      {% csrf_token %}
+
+        <div class="form-row-compact">
+            <div class="form-group">
+              <label for="id_category"><i class="fas fa-th-list"></i> Category</label>
+              {% render_field policyForm.category class="form-control" placeholder="Life Insurance" %}
+            </div>
+            <div class="form-group">
+              <label for="id_policy_name"><i class="fas fa-file-signature"></i> Policy Name</label>
+              {% render_field policyForm.policy_name class="form-control" placeholder="Type Here" %}
+            </div>
+        </div>
+
+        <div class="form-row-compact">
+            <div class="form-group">
+              <label for="id_sum_assurance"><i class="fas fa-coins"></i> Sum Assurance</label>
+              {% render_field policyForm.sum_assurance class="form-control" placeholder="1250000" %}
+            </div>
+            <div class="form-group">
+              <label for="id_premium"><i class="fas fa-money-bill-wave"></i> Premium</label>
+              {% render_field policyForm.premium class="form-control" placeholder="70000" %}
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label for="id_tenure"><i class="fas fa-calendar-alt"></i> Tenure</label>
+          {% render_field policyForm.tenure class="form-control" placeholder="12" %}
+        </div>
+
+      <button type="submit" class="btn btn-modern-submit">
+        <i class="fas fa-plus-circle"></i> Add Policy
+      </button>
+    </form>
+
+  </div>
+</div>
+
+{% endblock content %}

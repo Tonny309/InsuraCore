@@ -1,0 +1,201 @@
+{% extends 'insurance/adminbase.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Formal/Professional UI, Full Width, Styled Header, Gradient Table Heading -->
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    /* Card Theme Colors */
+    :root {
+        --color-primary: #6C4CF5; /* Purple */
+        --color-secondary: #4FC3F7; /* Blue */
+        --color-header-bg: #E9ECEF; /* Light Gray/Off-White */
+        --color-header-text: #212529; /* Dark Text */
+    }
+
+    /* Container: Full screen occupancy, formal padding */
+    .container-fluid-custom {
+      {#padding: 30px 15px;#}
+      margin-top: 0;
+    }
+
+    /* Main Card/Content Area */
+    .content-card {
+      border-radius: 8px; /* Formal rounding */
+      background: #ffffff; /* Solid white background */
+      box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.08); /* Professional shadow */
+      padding: 0; /* Control padding inside header and body */
+      overflow: hidden;
+    }
+
+   /* STYLED CARD HEADER */
+.card-header-formal {
+    background: var(--color-header-bg); /* Light background */
+    color: var(--color-header-text);
+    padding: 18px 25px;
+    font-size: 1.5rem; /* Formal font size */
+    font-weight: 600;
+    /* CHANGE 1: Use 'justify-content: center;' to center the flex items (icon + text) */
+    justify-content: center;
+    /* The following is generally not needed when using justify-content: center,
+       but if the icon padding/margin causes issues, you might add it: */
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Bottom border with gradient accent */
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, var(--color-primary), var(--color-secondary)) 1;
+}
+    .card-header-formal .fa-edit {
+      color: var(--color-primary);
+      font-size: 1.1em;
+    }
+
+    /* Content Body Padding */
+    .card-body-content {
+        padding: 25px;
+    }
+
+
+    /* Table Container: Formal structure */
+    .glass-table {
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #dee2e6; /* Add subtle border for structure */
+      margin-bottom: 0;
+      box-shadow: none;
+      overflow: hidden;
+    }
+
+    /* Table Header: USING GRADIENT COLOR FOR UPDATE BUTTON/PREVIOUS TABLE HEADER */
+    .glass-table thead th {
+      background: linear-gradient(90deg, var(--color-primary) 35%, var(--color-secondary) 100%); /* Primary Gradient */
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 0.95em;
+      border: none;
+      vertical-align: middle;
+      text-align: center;
+      padding: 12px 5px;
+    }
+
+    /* Table Body: Standardized data display */
+    .glass-table tbody td {
+      background: none;
+      color: #212529;
+      font-size: 0.97rem;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+      text-align: center;
+      padding: 10px 5px;
+      transition: background 0.2s;
+    }
+
+    .glass-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .glass-table tbody tr:hover {
+      background: rgba(108, 76, 245, 0.05) !important;
+    }
+
+    /* Important data column (Category Name) */
+    .glass-table td.text-left-data {
+      text-align: left !important;
+      font-weight: 500;
+      color: #000;
+    }
+
+    /* Update Button: Flushy gradient button */
+    .btn-update-flush {
+      background: linear-gradient(90deg, var(--color-primary) 65%, var(--color-secondary) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 6px 15px;
+      font-size: 0.9em;
+      font-weight: 600;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 4px rgba(76,76,245,0.15);
+    }
+    .btn-update-flush:hover, .btn-update-flush:focus {
+      background: linear-gradient(90deg, #5a3ed1 65%, #47b2c7 100%);
+      box-shadow: 0 3px 10px rgba(76,76,245,0.20);
+    }
+
+    .glass-table .fa-edit {
+      margin-right: 5px;
+      color: #fff;
+      font-size: 1em;
+    }
+
+    /* No data text */
+    .no-categories-modern {
+      padding: 30px 0 10px 0;
+      color: #6c757d;
+      font-size: 1em;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    /* Media Queries */
+    @media (max-width: 700px) {
+      .card-header-formal { font-size: 1.3rem; }
+      .card-body-content { padding: 15px; }
+    }
+  </style>
+</head>
+
+<div class="container-fluid container-fluid-custom">
+
+  <div class="content-card">
+    <!-- STYLED CARD HEADER -->
+    <div class="card-header-formal">
+      <i class="fas fa-edit"></i> CATEGORY UPDATE
+    </div>
+
+    <div class="card-body-content">
+        <div class="table-responsive">
+          <table class="table glass-table table-striped" id="dev-table">
+            <thead>
+              <tr>
+                <th style="width: 5%;">#</th>
+                <th style="width: 50%; text-align: left;">Category Name</th>
+                <th style="width: 30%;">Creation Date</th>
+                <th style="width: 15%;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in categories %}
+              <tr>
+                <td class="text-center-data">{{ forloop.counter }}</td>
+                <td class="text-left-data">{{ t.category_name }}</td>
+                <td class="text-center-data">{{ t.creation_date }}</td>
+                <td class="text-center-data">
+                  <a class="btn btn-update-flush btn-sm" href="{% url 'update-category' t.id %}">
+                    <i class="fa fa-edit"></i> UPDATE
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        {% if not categories %}
+          <div class="no-categories-modern">
+            No policy categories found for management.
+          </div>
+        {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+
+
+  <style media="screen">
+    /* --- COLOR PALETTE DEFINITION --- */
+    :root {
+      --color-primary-blue: #0077b6;   /* Main accent color (links, highlights) */
+      --color-primary-dark: #023e8a;   /* Slightly darker blue */
+      --color-sidebar-bg: #1f2833;    /* Deep charcoal/slate for sidebar */
+      --color-header-bg: #101820;     /* Near black for header */
+      --color-text-light: #e0f2f1;    /* Light text color */
+      --color-logout-red: #d90429;    /* Logout button red */
+      --color-logout-hover: #ef233c;  /* Brighter red hover */
+      --color-active-link: #00b4d8;    /* Active link/hover background */
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Gill Sans", sans-serif;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 18px 25px;
+background: linear-gradient(to right, #101820 0%, #1f2833 100%);      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s ease;
+    }
+
+    .left_area h3 {
+      color: var(--color-text-light); /* White/Light text */
+      margin: 0px;
+      text-transform: uppercase;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .left_area span {
+      color: var(--color-primary-blue); /* Accent Blue */
+    }
+
+    .logout_btn {
+      padding: 5px;
+      background: var(--color-logout-red); /* Red Button */
+      text-decoration: none;
+      float: right;
+      margin-top: -30px;
+      margin-right: 40px;
+      border-radius: 4px; /* Slightly more rounded */
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text-light);
+      transition: 0.5s;
+    }
+
+    .logout_btn:hover {
+      background: var(--color-logout-hover); /* Lighter red hover */
+      color: white;
+    }
+
+    .sidebar {
+background: linear-gradient(135deg, #3a4557 0%, #6c3fd8 100%);
+      margin-top: 70px;
+      padding-top: 30px;
+      position: fixed;
+      left: 0;
+      width: 250px;
+      height: 100%;
+      transition: 0.5s;
+      transition-property: left;
+    }
+
+    .sidebar .profile_image {
+      width: 100px;
+      height: 100px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+      /* Added subtle border to image */
+      border: 3px solid var(--color-primary-blue);
+    }
+
+    .sidebar h4, .sidebar h5 {
+      color: var(--color-text-light); /* Light Gray Text */
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+   .sidebar a {
+      color: var(--color-text-light);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      height: 60px;
+      line-height: 60px;
+      padding: 0 20px;
+      box-sizing: border-box;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border-radius: 0px; /* Removed rounding to keep it clean */
+    }
+
+    .sidebar a i {
+      min-width: 25px;
+      text-align: center;
+      font-size: 18px;
+      color: var(--color-active-link); /* Set icon color to light blue */
+    }
+
+    .sidebar a:hover {
+      background: var(--color-active-link); /* Light Blue Background on Hover */
+      color: var(--color-header-bg); /* Dark Text on Hover */
+      transform: none;  /* Removed subtle hover movement */
+      box-shadow: none; /* Removed optional shadow */
+    }
+
+    .sidebar i {
+      padding-right: 10px;
+    }
+
+    label #sidebar_btn {
+      z-index: 1;
+      color: var(--color-primary-blue); /* Accent Blue Button */
+      position: fixed;
+      cursor: pointer;
+      left: 300px;
+      padding-left: 30px;
+      font-size: 20px;
+      margin: 5px 0;
+      transition: 0.5s;
+      transition-property: color;
+      margin-top: 17px;
+    }
+
+    label #sidebar_btn:hover {
+      color: var(--color-active-link); /* Light Blue Hover */
+    }
+
+    #check:checked~.sidebar {
+      left: -190px;
+    }
+
+    #check:checked~.sidebar a span {
+      display: none;
+    }
+
+    #check:checked~.sidebar a {
+      font-size: 20px;
+      margin-left: 170px;
+      width: 80px;
+    }
+
+    .content {
+      margin-left: 250px;
+      /* Removed background image to keep focus on colors */
+      background: #f4f7f6; /* Very light, professional background color */
+      background-position: center;
+      background-size: cover;
+      height: 100vh;
+      transition: 0.5s;
+    }
+
+    #check:checked~.content {
+      margin-left: 60px;
+    }
+
+    #check {
+      display: none;
+    }
+  </style>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
+
+</head>
+
+<body>
+
+  <input type="checkbox" id="check">
+  <header style="padding-top: 0px;">
+    <label for="check">
+      <i class="fas fa-bars" id="sidebar_btn"></i>
+    </label>
+    <div class="left_area">
+      <h3>InsuraCore <span>Solutions</span></h3>
+    </div>
+    <div class="right_area">
+      <a href="/logout" class="logout_btn"><i class="fa fa-power-off"></i> Logout</a>
+    </div>
+  </header>
+  <div class="sidebar" style="
+    margin-top: 50px;
+">
+    <center>
+
+      <img src="{% static "image/admin-icn.png" %}" class="profile_image" alt="">
+      <h5 style="color:rgb(230, 230, 230)">Administrator</h5>
+
+    </center>
+
+    <a href="/admin-dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+    <a href="/admin-view-customer"><i class="fas fa-users"></i><span>Customer</span></a>
+    <a href="/admin-category"><i class="fas fa-list-alt"></i><span>Category</span></a>
+    <a href="/admin-policy"><i class="fab fa-product-hunt"></i><span>Policy</span></a>
+    <a href="/admin-question"><i class="fas fa-question-circle"></i><span>Questions</span></a>
+
+
+
+  </div>
+  <div class="content">
+    <br><br><br><br><br>
+    {% block content %}
+
+    {% endblock content %}
+
+
+    <br><br><br>
+
+  </div>
+  </body>
+
+</html>
