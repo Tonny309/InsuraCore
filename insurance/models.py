@@ -18,12 +18,14 @@ class Policy(models.Model):
         return self.policy_name
 
 class PolicyRecord(models.Model):
-    customer= models.ForeignKey(Customer, on_delete=models.CASCADE)
-    Policy= models.ForeignKey(Policy, on_delete=models.CASCADE)
-    status = models.CharField(max_length=100,default='Pending')
-    creation_date =models.DateField(auto_now=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    Policy = models.ForeignKey(Policy, on_delete=models.CASCADE)
+    status = models.CharField(max_length=100, default='Pending')
+    creation_date = models.DateField(auto_now=True)
+
     def __str__(self):
-        return self.policy
+        return str(self.Policy)  # Use the correct field name and convert to string
+
 
 class Question(models.Model):
     customer= models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -32,3 +34,4 @@ class Question(models.Model):
     asked_date =models.DateField(auto_now=True)
     def __str__(self):
         return self.description
+

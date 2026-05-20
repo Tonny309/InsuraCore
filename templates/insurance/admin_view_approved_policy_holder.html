@@ -4,7 +4,7 @@
 
 <head>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
@@ -13,97 +13,120 @@
       text-decoration: none;
     }
 
-    /* Primary Theme Colors (Emerald/Teal Gradient) */
+    /* --- COLOR PALETTE DEFINITION --- */
     :root {
-        --color-emerald: #00A398; /* Start color (Teal/Emerald) */
-        --color-green-accent: #1D8A68; /* End color (Deep Green) */
-        --color-approved: #28a745;
-        --color-header-text: #ffffff;
+        --color-primary-violet: #7B68EE; /* Main Header/Accent Color (From your gradient) */
+        --color-secondary-teal: #1D8A68; /* Table Header/Dark Accent Color */
+        --color-background-light: #f4f6f9; /* Light, clean background */
+        --color-card-shadow: rgba(0, 0, 0, 0.1);
+        --color-success: #28a745; /* Standard green for 'Approved' */
     }
 
-    /* Container for the view content */
+    /* General Body and Container Styling */
     .container-fluid-custom {
-        padding: 30px 20px;
-        background-color: greenyellow;
+        padding: 40px 20px;
+        background-color: var(--color-background-light); /* Clean light background */
+        min-height: 80vh; /* Ensure body covers minimum height */
     }
 
-    /* Main Card/Panel Style */
+    .container {
+        max-width: 1400px; /* Slightly wider table view */
+        padding: 0 15px;
+    }
+
+    /* --- CARD/PANEL STYLING --- */
     .view-card {
         background: #ffffff;
         border: none;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-        padding: 0;
+        border-radius: 12px;
+        /* Enhanced shadow for a 'lifted' effect */
+        box-shadow: 0 10px 20px -5px var(--color-card-shadow);
+        overflow: hidden; /* Ensures header border radius works */
     }
 
     /* Panel Header Styling (Themed Gradient) */
     .card-header-custom {
-        /* Horizontal Gradient from Emerald/Teal to Deep Green */
-        background: linear-gradient(135deg, #7B68EE, #9B59B6);
-        color: var(--color-header-text);
-        padding: 15px 20px;
-        border-radius: 8px 8px 0 0;
+        /* Horizontal Gradient from Violet to a deeper secondary color */
+        background: linear-gradient(135deg, var(--color-primary-violet), #9B59B6);
+        color: #ffffff;
+        padding: 25px 30px;
         font-weight: 700;
-        font-size: 1.5rem;
-        text-align: center;
+        font-size: 1.8rem; /* Larger, more prominent title */
+        text-align: left;
+        border-radius: 12px 12px 0 0;
     }
 
-    /* Table Styling */
+    /* Optional: Add a subtle separator for contrast */
+    .card-header-custom::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 4px;
+        background-color: var(--color-secondary-teal); /* Teal line below header */
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+
+    /* --- TABLE STYLING --- */
     .table {
         margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0;
     }
 
+    /* Table Head */
     .table thead th {
-        /* Header background based on the gradient start color */
-        background-color:green;
+        background-color: var(--color-secondary-teal); /* Using one consistent dark accent color */
         color: #fff;
         font-weight: 600;
         vertical-align: middle;
-        padding: 12px;
-        text-align: center; /* Default header text alignment */
+        padding: 15px;
+        text-align: center;
+        border: none; /* Remove default borders */
     }
 
+    /* Table Body Cells */
     .table tbody td {
       vertical-align: middle;
-      padding: 12px;
+      padding: 15px;
       text-align: center;
+      border-top: 1px solid #e9ecef; /* Light separator line */
     }
 
+    /* Row Hover Effect */
     .table tbody tr:hover {
-      background-color: rgba(0, 163, 152, 0.05); /* Subtle hover effect */
-      transition: 0.3s ease;
+      background-color: rgba(123, 104, 238, 0.05); /* Subtle violet hover */
+      transition: background-color 0.3s ease;
     }
 
+    /* No more `table-warning` or conflicting background colors */
     .table-responsive {
         overflow-x: auto;
-
-    }
-
-    /* Specific styling for data columns */
-    .text-center-data {
-        text-align: center !important;
-    }
-    .text-left-data {
-        text-align: left !important;
     }
 
     /* Status Badges */
     .status-badge {
-        padding: .4em .7em;
-        font-weight: 600;
-        border-radius: .25rem;
-        font-size: 85%;
+        padding: .5em 1em;
+        font-weight: 700;
+        border-radius: 20px; /* Pill shape for modern look */
+        font-size: 90%;
         color: white;
-        min-width: 100px;
+        min-width: 120px;
         display: inline-block;
         text-transform: uppercase;
-        background-color: var(--color-approved); /* Always green for approved status */
+        background-color: var(--color-success);
+        box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3); /* Subtle shadow for depth */
     }
 
-    /* Fix container class usage */
-    .container {
-        max-width: 1300px;
-        padding: 0 15px;
+    /* Policy and Customer Details */
+    .policy-detail {
+        font-weight: 600;
+        color: var(--color-primary-violet); /* Highlight important text */
+    }
+    .customer-detail {
+        color: #495057;
     }
   </style>
 </head>
@@ -111,17 +134,17 @@
 <div class="container container-fluid-custom">
   <div class="view-card">
 
-    <div class="card-header-custom ">
-      Approved Policy Holder Records
+    <div class="card-header-custom position-relative text-center">
+      Approved Policy Holder Records 📄
     </div>
 
-    <div class="table-responsive table-warning">
-      <table class="table table-hover table-striped " id="dev-table">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped" id="dev-table">
         <thead>
           <tr>
             <th style="width: 5%;">#</th>
-            <th style="width: 35%;">Policy</th>
-            <th style="width: 30%;">Customer</th>
+            <th style="width: 35%;">Policy Name</th>
+            <th style="width: 30%;">Customer Name</th>
             <th style="width: 15%;">Applied Date</th>
             <th style="width: 15%;">Status</th>
           </tr>
@@ -129,13 +152,13 @@
         <tbody>
           {% for t in policyrecords %}
           <tr>
-            <td class="text-center-data"> {{ forloop.counter }}</td>
-            <td class="text-left-data"> **{{t.Policy}}**</td>
-            <td class="text-left-data"> {{t.customer}}</td>
+            <td class="text-center">{{ forloop.counter }}</td>
+            <td class="text-left policy-detail"> {{t.Policy}}</td>
+            <td class="text-left customer-detail"> {{t.customer}}</td>
 
-            <td class="text-center-data">{{t.creation_date}}</td>
+            <td class="text-center">{{t.creation_date}}</td>
 
-            <td class="text-center-data">
+            <td class="text-center">
                 <span class="status-badge">{{t.status}}</span>
             </td>
           </tr>
@@ -145,8 +168,8 @@
     </div>
 
     {% if not policyrecords %}
-    <div class="p-4 text-center text-muted">
-        No approved policy holder records found.
+    <div class="p-5 text-center text-muted bg-light">
+        <i class="fas fa-exclamation-circle mr-2"></i> No approved policy holder records found at this time.
     </div>
     {% endif %}
 

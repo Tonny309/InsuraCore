@@ -170,7 +170,7 @@
                 <a class="btn btn-danger action-btn" style="color: white;" href="{% url 'reject-request' t.id  %}">Reject</a>
               {% else %}
                 <span class="status-badge {% if t.status == 'Approved' %}badge-approved{% else %}badge-rejected{% endif %}" style="min-width: 160px;">
-                    **{{t.status}}**
+                    {{t.status}}
                 </span>
               {% endif %}
             </td>

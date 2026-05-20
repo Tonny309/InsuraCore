@@ -11,45 +11,40 @@
       text-decoration: none;
     }
 
-    /* --- COLOR DEFINITIONS (Blue/Teal/Green Gradient Palette) --- */
+    /* --- COLOR DEFINITIONS (NAVY & AMBER PALETTE) --- */
     :root {
-        --color-blue: #007bff;            /* Start Blue */
-        --color-teal: #00bcd4;            /* Middle Teal */
-        --color-green: #4CAF50;           /* End Green */
-        --color-header-text: #ffffff;     /* White Text on dark gradient */
-        --color-body-bg: #f3f7f8;         /* Very light cool gray background for the page */
-        --color-text-dark: #34495e;       /* General Dark Text */
+        --color-primary-navy: #2c3e50;    /* Dark Navy Blue (Header, Table Header) */
+        --color-secondary-slate: #34495e; /* Slightly lighter navy for text/policy details */
+        --color-amber: #f39c12;           /* Bright Amber/Orange Accent (Button, Icon) */
+        --color-header-text: #ffffff;     /* White Text */
+        --color-body-bg: #f5f7fa;         /* Very light cool gray background for the page */
         --color-bg-white: #ffffff;        /* Background: Pure White for card body */
-        --color-border-light: #e0f2f1;     /* Light, blending border */
-        --color-row-stripe: #fbfdfe;      /* Very light stripe background */
+        --color-border-light: #e6e9ed;     /* Light gray border */
+        --color-row-stripe: #fcfdfe;      /* Very light stripe background */
     }
 
-    /* Apply a light background color to the body area for full screen fit */
     body {
         background-color: var(--color-body-bg);
     }
 
     /* --- Layout and Card Structure --- */
 
-    /* Container: Full screen occupancy, professional padding */
     .container-fluid-custom {
       padding: 30px 15px;
       margin-top: 0;
     }
 
-    /* Main Card/Content Area */
     .content-card {
       border-radius: 12px;
       background: var(--color-bg-white);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Elevated shadow */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       padding: 0;
       overflow: hidden;
     }
 
-    /* STYLED CARD HEADER (Gradient Background) */
+    /* STYLED CARD HEADER (Solid Navy Background) */
     .card-header-styled {
-        /* Blue -> Teal -> Green Gradient */
-        background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-teal) 50%, var(--color-green) 100%);
+        background-color: var(--color-primary-navy); /* Solid Deep Navy */
         color: var(--color-header-text);
         padding: 22px 25px;
         font-size: 1.6rem;
@@ -58,27 +53,27 @@
         align-items: center;
         justify-content: center;
         gap: 15px;
+        letter-spacing: 1px;
     }
     .card-header-styled .fa-edit {
-      color: var(--color-header-text);
+      color: var(--color-amber); /* Amber icon highlight */
       font-size: 1.1em;
     }
 
-    /* Content Body Padding */
     .card-body-content {
         padding: 25px 0;
     }
 
-    /* --- Table Styling (Interactive Data Display) --- */
+    /* --- Table Styling --- */
     .styled-table {
       width: 100%;
       border-collapse: collapse;
       margin: 0;
     }
 
-    /* Table Header: Darker solid color from the gradient blend */
+    /* Table Header: Navy Background */
     .styled-table thead th {
-      background-color: #00897b; /* Dark Teal solid color */
+      background-color: var(--color-primary-navy);
       color: var(--color-header-text);
       font-weight: 600;
       letter-spacing: 0.5px;
@@ -91,7 +86,7 @@
 
     /* Table Body Styling */
     .styled-table tbody td {
-      color: var(--color-text-dark);
+      color: var(--color-secondary-slate);
       font-size: 0.95rem;
       border-bottom: 1px solid var(--color-border-light);
       vertical-align: middle;
@@ -112,7 +107,7 @@
 
     /* Interactive Hover Effect */
     .styled-table tbody tr:hover td {
-      background: rgba(0, 188, 212, 0.1) !important; /* Subtle Teal hover effect */
+      background: rgba(243, 156, 18, 0.1) !important; /* Subtle Amber hover effect */
       cursor: pointer;
     }
 
@@ -120,12 +115,12 @@
     .styled-table td.policy-name-data {
       text-align: left !important;
       font-weight: 500;
-      color: var(--color-blue); /* Clear blue for policy name */
+      color: var(--color-secondary-slate);
     }
 
-    /* Update Button (Solid Green for clear action) */
+    /* Update Button (Solid Amber for clear action) */
     .btn-update-styled {
-      background-color: var(--color-green);
+      background-color: var(--color-amber);
       color: var(--color-header-text);
       border: none;
       border-radius: 5px;
@@ -133,11 +128,11 @@
       font-size: 0.85em;
       font-weight: 600;
       transition: background-color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+      box-shadow: 0 2px 4px rgba(243, 156, 18, 0.4);
     }
     .btn-update-styled:hover {
-      background-color: #43A047;
-      box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+      background-color: #e67e22; /* Slightly darker orange on hover */
+      box-shadow: 0 4px 8px rgba(243, 156, 18, 0.6);
     }
     .btn-update-styled .fa-edit {
       color: var(--color-header-text);
@@ -148,16 +143,13 @@
     /* No data text */
     .no-policies-styled {
       padding: 30px 0 10px 0;
-      color: #00897b;
+      color: var(--color-primary-navy);
       font-size: 1em;
       font-weight: 500;
       text-align: center;
     }
 
-    /* Media Queries for full-screen responsiveness (retained from previous design) */
-    @media (max-width: 992px) {
-        .styled-table thead th, .styled-table tbody td { font-size: 0.9rem; padding: 10px 3px; }
-    }
+    /* --- Mobile Responsiveness --- */
     @media (max-width: 768px) {
         .table-responsive {
             border: 1px solid var(--color-border-light);
@@ -182,6 +174,7 @@
             padding-left: 50%;
             position: relative;
         }
+        /* Mobile Label Display: Uses the data-label attribute */
         .styled-table tbody td:before {
             content: attr(data-label);
             position: absolute;
@@ -191,11 +184,19 @@
             white-space: nowrap;
             text-align: left;
             font-weight: 600;
-            background-color: transparent; /* Ensure label background is transparent */
-            color: var(--color-text-dark);
+            background-color: transparent;
+            color: var(--color-primary-navy); /* Use navy for label visibility */
         }
         .styled-table td.policy-name-data {
              text-align: right !important;
+        }
+        /* Fix for empty cell content on mobile */
+        .styled-table tbody tr:last-child td[colspan="8"] {
+            text-align: center !important;
+            padding-left: 10px;
+        }
+        .styled-table tbody tr:last-child td[colspan="8"]:before {
+            content: none;
         }
     }
   </style>

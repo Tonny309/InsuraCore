@@ -92,4 +92,3 @@ def question_history_view(request):
     return render(request,'customer/question_history.html',{'questions':questions,'customer':customer})
 
 
-

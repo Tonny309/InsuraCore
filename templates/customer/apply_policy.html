@@ -173,7 +173,7 @@
                 <th style="width: 15%;">Category</th>
                 <th style="width: 15%;">Sum Assurance</th>
                 <th style="width: 12%;">Premium</th>
-                <th style="width: 10%;">Tenure</th>
+                <th style="width: 10%;">Tenure (months)</th>
                 <th style="width: 17%;">Creation Date</th>
                 <th style="width: 8%;">Action</th>
               </tr>
@@ -184,8 +184,8 @@
                 <td data-label="#">{{ forloop.counter }}</td>
                 <td data-label="Policy Name" class="policy-name-data">{{ t.policy_name }}</td>
                 <td data-label="Category">{{ t.category }}</td>
-                <td data-label="Sum Assurance">{{ t.sum_assurance }}</td>
-                <td data-label="Premium">{{ t.premium }}</td>
+                <td data-label="Sum Assurance">Ksh {{ t.sum_assurance }}</td>
+                <td data-label="Premium">Ksh {{ t.premium }}</td>
                 <td data-label="Tenure">{{ t.tenure }}</td>
                 <td data-label="Creation Date">{{ t.creation_date }}</td>
                 <td data-label="Action">
